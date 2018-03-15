@@ -118,128 +118,128 @@ else
 	##---------------------------------------------------------------##
 	##---------------------- Installing Eigen -----------------------##
 	##---------------------------------------------------------------##
-	echo ""
-	echo -e "${COLOR_BOLD}Installing Eigen ...${COLOR_RESET}"
-	if [ -d "$INSTALL_DEPS_PREFIX/include/eigen3" ] || [ -d "$COMMON_INSTALL_PREFIX/include/eigen3" ]; then
-		echo -e -n "${COLOR_QUES}Do you want to re-install Eigen 3.2.10? [y/N]: ${COLOR_RESET}"
-		read ANSWER_EIGEN
-		if [ "$ANSWER_EIGEN" == "Y" ] || [ "$ANSWER_EIGEN" == "y" ]; then
+#	echo ""
+#	echo -e "${COLOR_BOLD}Installing Eigen ...${COLOR_RESET}"
+#	if [ -d "$INSTALL_DEPS_PREFIX/include/eigen3" ] || [ -d "$COMMON_INSTALL_PREFIX/include/eigen3" ]; then
+#		echo -e -n "${COLOR_QUES}Do you want to re-install Eigen 3.2.10? [y/N]: ${COLOR_RESET}"
+#		read ANSWER_EIGEN
+#		if [ "$ANSWER_EIGEN" == "Y" ] || [ "$ANSWER_EIGEN" == "y" ]; then
 			bash $CURRENT_DIR/install/install_eigen.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	    fi
-	else
-		bash $CURRENT_DIR/install/install_eigen.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	fi
+#	    fi
+#	else
+#		bash $CURRENT_DIR/install/install_eigen.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
+#	fi
 
 
 	##---------------------------------------------------------------##
 	##----------------------- Installing RBDL -----------------------##
 	##---------------------------------------------------------------##
-	echo ""
-	echo -e "${COLOR_BOLD}Installing RBDL ...${COLOR_RESET}"
-	if [ -d "$INSTALL_DEPS_PREFIX/include/rbdl" ] || [ -d "$COMMON_INSTALL_PREFIX/include/rbdl" ]; then
-		echo -e -n "${COLOR_QUES}Do you want to re-install RBDL 2.4.0? [y/N]: ${COLOR_RESET}"
-		read ANSWER_RBDL
-		if [ "$ANSWER_RBDL" == "Y" ] || [ "$ANSWER_RBDL" == "y" ]; then
+#	echo ""
+#	echo -e "${COLOR_BOLD}Installing RBDL ...${COLOR_RESET}"
+#	if [ -d "$INSTALL_DEPS_PREFIX/include/rbdl" ] || [ -d "$COMMON_INSTALL_PREFIX/include/rbdl" ]; then
+#		echo -e -n "${COLOR_QUES}Do you want to re-install RBDL 2.4.0? [y/N]: ${COLOR_RESET}"
+#		read ANSWER_RBDL
+#		if [ "$ANSWER_RBDL" == "Y" ] || [ "$ANSWER_RBDL" == "y" ]; then
 			bash $CURRENT_DIR/install/install_rbdl.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	    fi
-	else
-		bash $CURRENT_DIR/install/install_rbdl.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	fi
+#	    fi
+#	else
+#		bash $CURRENT_DIR/install/install_rbdl.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
+#	fi
 
 
 	##---------------------------------------------------------------##
 	##-------------------- Installing YAML-CPP ----------------------##
 	##---------------------------------------------------------------##
-	echo ""
-	echo -e "${COLOR_BOLD}Installing YAML-CPP ...${COLOR_RESET}"
-	if [ -d "$INSTALL_DEPS_PREFIX/include/yaml-cpp" ] || [ -d "$COMMON_INSTALL_PREFIX/include/yaml-cpp" ]; then
-		echo -e -n "${COLOR_QUES}Do you want to re-install YAML-CPP 0.5.2? [y/N]: ${COLOR_RESET}"
-		read ANSWER_YAMLCPP
-		if [ "$ANSWER_YAMLCPP" == "Y" ] || [ "$ANSWER_YAMLCPP" == "y" ]; then
+#	echo ""
+#	echo -e "${COLOR_BOLD}Installing YAML-CPP ...${COLOR_RESET}"
+#	if [ -d "$INSTALL_DEPS_PREFIX/include/yaml-cpp" ] || [ -d "$COMMON_INSTALL_PREFIX/include/yaml-cpp" ]; then
+#		echo -e -n "${COLOR_QUES}Do you want to re-install YAML-CPP 0.5.2? [y/N]: ${COLOR_RESET}"
+#		read ANSWER_YAMLCPP
+#		if [ "$ANSWER_YAMLCPP" == "Y" ] || [ "$ANSWER_YAMLCPP" == "y" ]; then
 			bash $CURRENT_DIR/install/install_yamlcpp.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-		fi
-	else
-		bash $CURRENT_DIR/install/install_yamlcpp.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	fi
+#		fi
+#	else
+#		bash $CURRENT_DIR/install/install_yamlcpp.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
+#	fi
 
 
 	##---------------------------------------------------------------##
 	##------------------------ Installing SWIG ----------------------##
 	##---------------------------------------------------------------##
-	echo ""
-	echo -e "${COLOR_BOLD}Installing SWIG ...${COLOR_RESET}"
-	if [ -d "$INSTALL_DEPS_PREFIX/share/swig" ] || [ -d "$COMMON_INSTALL_PREFIX/share/swig" ]; then
-		echo -e -n "${COLOR_QUES}Do you want to re-install SWIG 3.0.12? [y/N]: ${COLOR_RESET}"
-		read ANSWER_SWIG
-		if [ "$ANSWER_SWIG" == "Y" ] || [ "$ANSWER_SWIG" == "y" ]; then
+#	echo ""
+#	echo -e "${COLOR_BOLD}Installing SWIG ...${COLOR_RESET}"
+#	if [ -d "$INSTALL_DEPS_PREFIX/share/swig" ] || [ -d "$COMMON_INSTALL_PREFIX/share/swig" ]; then
+#		echo -e -n "${COLOR_QUES}Do you want to re-install SWIG 3.0.12? [y/N]: ${COLOR_RESET}"
+#		read ANSWER_SWIG
+#		if [ "$ANSWER_SWIG" == "Y" ] || [ "$ANSWER_SWIG" == "y" ]; then
 			bash $CURRENT_DIR/install/install_swig.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-		fi
-	else
-		bash $CURRENT_DIR/install/install_swig.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	fi
+#		fi
+#	else
+#		bash $CURRENT_DIR/install/install_swig.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
+#	fi
 
 
 	##---------------------------------------------------------------##
 	##---------------------- Installing Ipopt -----------------------##
 	##---------------------------------------------------------------##
-	echo ""
-	echo -e "${COLOR_BOLD}Installing Ipopt ...${COLOR_RESET}"
-	if [ -d "$INSTALL_DEPS_PREFIX/include/coin" ] || [ -d "$COMMON_INSTALL_PREFIX/include/coin" ]; then
-		# Control will enter here if $DIRECTORY exists.
-		echo -e -n "${COLOR_QUES}Do you want to re-install Ipopt 3.12.4? [y/N]: ${COLOR_RESET}"
-		read ANSWER_IPOPT
-		if [ "$ANSWER_IPOPT" == "Y" ] || [ "$ANSWER_IPOPT" == "y" ]; then
+#	echo ""
+#	echo -e "${COLOR_BOLD}Installing Ipopt ...${COLOR_RESET}"
+#	if [ -d "$INSTALL_DEPS_PREFIX/include/coin" ] || [ -d "$COMMON_INSTALL_PREFIX/include/coin" ]; then
+#		# Control will enter here if $DIRECTORY exists.
+#		echo -e -n "${COLOR_QUES}Do you want to re-install Ipopt 3.12.4? [y/N]: ${COLOR_RESET}"
+#		read ANSWER_IPOPT
+#		if [ "$ANSWER_IPOPT" == "Y" ] || [ "$ANSWER_IPOPT" == "y" ]; then
 			bash $CURRENT_DIR/install/install_ipopt.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-    	fi
-	else
-		echo -e -n "${COLOR_QUES}Do you want to install Ipopt 3.12.4? [y/N]: ${COLOR_RESET}"
-		read ANSWER_IPOPT
-		if [ "$ANSWER_IPOPT" == "Y" ] || [ "$ANSWER_IPOPT" == "y" ]; then
-			bash $CURRENT_DIR/install/install_ipopt.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-		fi
-	fi
+#    	fi
+#	else
+#		echo -e -n "${COLOR_QUES}Do you want to install Ipopt 3.12.4? [y/N]: ${COLOR_RESET}"
+#		read ANSWER_IPOPT
+#		if [ "$ANSWER_IPOPT" == "Y" ] || [ "$ANSWER_IPOPT" == "y" ]; then
+#			bash $CURRENT_DIR/install/install_ipopt.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
+#		fi
+#	fi
 
 
 	##---------------------------------------------------------------##
 	##--------------------- Installing qpOASES ----------------------##
 	##---------------------------------------------------------------##
-	echo ""
-	echo -e "${COLOR_BOLD}Installing qpOASES ...${COLOR_RESET}"
-	if [ -d "$INSTALL_DEPS_PREFIX/include/qpOASES" ] || [ -d "$COMMON_INSTALL_PREFIX/include/qpOASES" ]; then
-		# Control will enter here if $DIRECTORY exists.
-		echo -e -n "${COLOR_QUES}Do you want to re-install qpOASES 3.2.0? [y/N]: ${COLOR_RESET}"
-		read ANSWER_QPOASES
-		if [ "$ANSWER_QPOASES" == "Y" ] || [ "$ANSWER_QPOASES" == "y" ]; then
+#	echo ""
+#	echo -e "${COLOR_BOLD}Installing qpOASES ...${COLOR_RESET}"
+#	if [ -d "$INSTALL_DEPS_PREFIX/include/qpOASES" ] || [ -d "$COMMON_INSTALL_PREFIX/include/qpOASES" ]; then
+#		# Control will enter here if $DIRECTORY exists.
+#		echo -e -n "${COLOR_QUES}Do you want to re-install qpOASES 3.2.0? [y/N]: ${COLOR_RESET}"
+#		read ANSWER_QPOASES
+#		if [ "$ANSWER_QPOASES" == "Y" ] || [ "$ANSWER_QPOASES" == "y" ]; then
 			bash $CURRENT_DIR/install/install_qpoases.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-    	fi
-	else
-		echo -e -n "${COLOR_QUES}Do you want to install qpOASES 3.2.0? [y/N]: ${COLOR_RESET}"
-		read ANSWER_QPOASES
-		if [ "$ANSWER_QPOASES" == "Y" ] || [ "$ANSWER_QPOASES" == "y" ]; then
-			bash $CURRENT_DIR/install/install_qpoases.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-		fi
-	fi
+#    	fi
+#	else
+#		echo -e -n "${COLOR_QUES}Do you want to install qpOASES 3.2.0? [y/N]: ${COLOR_RESET}"
+#		read ANSWER_QPOASES
+#		if [ "$ANSWER_QPOASES" == "Y" ] || [ "$ANSWER_QPOASES" == "y" ]; then
+#			bash $CURRENT_DIR/install/install_qpoases.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
+#		fi
+#	fi
 
 
 	##---------------------------------------------------------------##
 	##--------------------- Installing CMA-ES -----------------------##
 	##---------------------------------------------------------------##
-	echo ""
-	echo -e "${COLOR_BOLD}Installing libcmaes ...${COLOR_RESET}"
-	if [ -d "$INSTALL_DEPS_PREFIX/include/libcmaes" ]; then ## || [ -d "$COMMON_INSTALL_PREFIX/include/yaml-cpp" ]; then
-		# Control will enter here if $DIRECTORY exists.
-		echo -e -n "${COLOR_QUES}Do you want to re-install libcmaes 0.9.5? [y/N]: ${COLOR_RESET}"
-		read ANSWER_LIBCMAES
-		if [ "$ANSWER_LIBCMAES" == "Y" ] || [ "$ANSWER_LIBCMAES" == "y" ]; then
+#	echo ""
+#	echo -e "${COLOR_BOLD}Installing libcmaes ...${COLOR_RESET}"
+#	if [ -d "$INSTALL_DEPS_PREFIX/include/libcmaes" ] || [ -d "$COMMON_INSTALL_PREFIX/include/yaml-cpp" ]; then
+#		# Control will enter here if $DIRECTORY exists.
+#		echo -e -n "${COLOR_QUES}Do you want to re-install libcmaes 0.9.5? [y/N]: ${COLOR_RESET}"
+#		read ANSWER_LIBCMAES
+#		if [ "$ANSWER_LIBCMAES" == "Y" ] || [ "$ANSWER_LIBCMAES" == "y" ]; then
 			bash $CURRENT_DIR/install/install_libcmaes.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	    fi
-	else
-		echo -e -n "${COLOR_QUES}Do you want to install libcmaes 0.9.5? [y/N]: ${COLOR_RESET}"
-		read ANSWER_LIBCMAES
-		if [ "$ANSWER_LIBCMAES" == "Y" ] || [ "$ANSWER_LIBCMAES" == "y" ]; then
-			bash $CURRENT_DIR/install/install_libcmaes.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-		fi
-	fi
+#	    fi
+#	else
+#		echo -e -n "${COLOR_QUES}Do you want to install libcmaes 0.9.5? [y/N]: ${COLOR_RESET}"
+#		read ANSWER_LIBCMAES
+#		if [ "$ANSWER_LIBCMAES" == "Y" ] || [ "$ANSWER_LIBCMAES" == "y" ]; then
+#			bash $CURRENT_DIR/install/install_libcmaes.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
+#		fi
+#	fi
 
 
 	##---------------------------------------------------------------##
