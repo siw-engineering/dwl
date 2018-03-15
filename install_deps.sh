@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# List of usefull colors
+# List of useful colors
 COLOR_RESET="\033[0m"
 COLOR_INFO="\033[0;32m"
 COLOR_ITEM="\033[1;34m"
@@ -9,8 +9,11 @@ COLOR_WARN="\033[0;33m"
 COLOR_BOLD="\033[1m"
 COLOR_UNDE="\033[4m"
 
-INSTALL_DEPS_PREFIX=/usr/local
-COMMON_INSTALL_PREFIX=/usr
+if [[ $1 == "autoinstall" ]]; then
+   AUTOINSTALL=true
+else
+   AUTOINSTALL=false
+fi
 
 # Getting the current directory of this script
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -23,10 +26,6 @@ function findCurrentOSType()
 	echo
 	osType=$(uname)
 	case "$osType" in
-	"Darwin")
-	{
-		CURRENT_OS="OSX"
-	} ;;
 	"Linux")
 	{
 		# If available, use LSB to identify distribution
@@ -47,11 +46,87 @@ function findCurrentOSType()
 	echo -e "${COLOR_BOLD}Running on ${CURRENT_OS}.${COLOR_RESET}"
 }
 
+function install_lapack
+{
+	# Install the packages
+	sudo apt-get --yes -install liblapack-dev liblapack3 libblas-common libblas-dev libblas3
+}
 
+function install_rbdl
+{
+	if [ "$1" == "purge" ]; then
+		echo -e "${COLOR_BOLD}Purging dls-rbdl...${COLOR_RESET}"
+		# Purge the package first
+		sudo apt-get --yes purge dls-rbdl
+	fi
+	echo -e "${COLOR_BOLD}Installing dls-rbdl...${COLOR_RESET}"
+	# Then install the package
+	sudo apt-get --yes install dls-rbdl
+}
+
+function install_swig
+{
+	if [ "$1" == "purge" ]; then
+		echo -e "${COLOR_BOLD}Purging dls-swig...${COLOR_RESET}"
+		# Purge the package first
+		sudo apt-get --yes purge dls-swig
+	fi
+	echo -e "${COLOR_BOLD}Installing dls-swig...${COLOR_RESET}"
+	# Then install the package
+	sudo apt-get --yes install dls-swig
+}
+
+function install_ipopt
+{
+	if [ "$1" == "purge" ]; then
+		echo -e "${COLOR_BOLD}Purging dls-libipopt...${COLOR_RESET}"
+		# Purge the package first
+		sudo apt-get --yes purge dls-libipopt
+	fi
+	echo -e "${COLOR_BOLD}Installing dls-libipopt...${COLOR_RESET}"
+	# Then install the package
+	sudo apt-get --yes install dls-libipopt
+}
+
+function install_qpoases
+{
+	if [ "$1" == "purge" ]; then
+		echo -e "${COLOR_BOLD}Purging dls-qpoases...${COLOR_RESET}"
+		# Purge the package first
+		sudo apt-get --yes purge dls-qpoases
+	fi
+	echo -e "${COLOR_BOLD}Installing dls-qpoases...${COLOR_RESET}"
+	# Then install the package
+	sudo apt-get --yes install dls-qpoases
+}
+
+function install_libcmaes
+{
+	if [ "$1" == "purge" ]; then
+		echo -e "${COLOR_BOLD}Purging dls-libcmaes...${COLOR_RESET}"
+		# Purge the package first
+		sudo apt-get --yes purge dls-libcmaes
+	fi
+	echo -e "${COLOR_BOLD}Installing dls-libcmaes...${COLOR_RESET}"
+	# Then install the package
+	sudo apt-get --yes install dls-libcmaes
+}
+
+function install_pyadolc
+{
+	if [ "$1" == "purge" ]; then
+		echo -e "${COLOR_BOLD}Purging dls-pyadolc...${COLOR_RESET}"
+		# Purge the package first
+		sudo apt-get --yes purge dls-pyadolc
+	fi
+	echo -e "${COLOR_BOLD}Installing dls-pyadolc...${COLOR_RESET}"
+	# Then install the package
+	sudo apt-get --yes install dls-pyadolc
+}
 
 ##############################################  MAIN  ########################################################
 # Printing the information of the shell script
-echo -e "${COLOR_BOLD}install_deps.sh - DWL Installation Script for Ubuntu Trusty Tahr 14.04${COLOR_RESET}"
+echo -e "${COLOR_BOLD}install_deps.sh - DWL Installation Script for Ubuntu Xenial Xerus 16.04${COLOR_RESET}"
 echo ""
 echo "Copyright (C) 2015-2018 Carlos Mastalli, <carlos.mastalli@laas.fr>"
 echo "All rights reserved."
@@ -70,9 +145,13 @@ echo "under certain conditions; see the LICENSE text file for more information."
 ## Detecting the current OS and distro
 findCurrentOSType
 
-mkdir -p ${CURRENT_DIR}/thirdparty
-cd ${CURRENT_DIR}/thirdparty
+sudo apt-get update
 
+# Added doxygen install.
+sudo apt-get install doxygen libeigen3-dev libyaml-cpp0.5v5
+
+# Install lapack and blas libraries
+install_lapack
 
 # Added doxygen install. TODO moved from here and tested for other OS (i.e. Mac OSX)
 sudo apt-get install doxygen
@@ -80,225 +159,147 @@ sudo apt-get install python2.7-dev python-numpy
 sudo pip install --user numpy
 sudo apt-get -qq install graphviz
 
-
-# Installing the dwl dependencies
-if [[ $1 == 'default' ]]; then
-	INSTALL_DEPS_PREFIX=$HOME/openrobots
-	mkdir -p $INSTALL_DEPS_PREFIX
-
-	# Installing all the dwl dependencies
-	bash $CURRENT_DIR/install/install_eigen.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	bash $CURRENT_DIR/install/install_rbdl.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	bash $CURRENT_DIR/install/install_yamlcpp.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	bash $CURRENT_DIR/install/install_swig.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	bash $CURRENT_DIR/install/install_ipopt.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	bash $CURRENT_DIR/install/install_qpoases.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	bash $CURRENT_DIR/install/install_libcmaes.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	bash $CURRENT_DIR/install/install_pyadolc.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	bash $CURRENT_DIR/install/install_octomap.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
+##---------------------------------------------------------------##
+##----------------------- Installing RBDL -----------------------##
+##---------------------------------------------------------------##
+echo ""
+echo -e "${COLOR_BOLD}Installing RBDL (REQUIRED Package)...${COLOR_RESET}"
+if $AUTOINSTALL; then
+	install_rbdl purge
 else
-	echo ""
-	read -s -p "Press enter to start the installation. " 
-	echo ""
-
-	echo -e -n "${COLOR_QUES}Do you want to install the thirdparties in $INSTALL_DEPS_PREFIX [Y/n]: ${COLOR_RESET}"
-	read ANSWER_PATH
-	if [ "$ANSWER_PATH" == "N" ] || [ "$ANSWER_PATH" == "n" ]; then
-		echo -e -n "${COLOR_QUES}Please write absolute path: ${COLOR_RESET}"
-		read ANSWER_PATH_STRING
-		INSTALL_DEPS_PREFIX=$ANSWER_PATH_STRING
+	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' dls-rbdl|grep "install ok installed")
+	if [ "" != "$PKG_OK" ]; then
+		echo -e -n "${COLOR_QUES}Do you want to re-install RBDL? [y/N]: ${COLOR_RESET}"
+		read ANSWER_RBDL
+		if [ "$ANSWER_RBDL" == "Y" ] || [ "$ANSWER_RBDL" == "y" ]; then
+			install_rbdl purge
+		fi
+	else
+		echo -e -n "${COLOR_QUES}Do you want to install RBDL? [y/N]: ${COLOR_RESET}"
+		read ANSWER_RBDL
+		if [ "$ANSWER_RBDL" == "Y" ] || [ "$ANSWER_RBDL" == "y" ]; then
+			install_rbdl
+		fi
 	fi
+fi
 
-	# Checking if the installation folder has sudo rights
-	INFO=( $(stat -L -c "%a %G %U" $INSTALL_DEPS_PREFIX) )
-	PERM=${INFO[0]}
-	GROUP=${INFO[1]}
-	OWNER=${INFO[2]}
+##---------------------------------------------------------------##
+##------------------------ Installing SWIG ----------------------##
+##---------------------------------------------------------------##
+echo ""
+echo -e "${COLOR_BOLD}Installing SWIG ...${COLOR_RESET}"
+if $AUTOINSTALL; then
+	install_swig purge
+else
+	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' dls-swig|grep "install ok installed")
+	if [ "" != "$PKG_OK" ]; then
+		echo -e -n "${COLOR_QUES}Do you want to re-install SWIG? [y/N]: ${COLOR_RESET}"
+		read ANSWER_SWIG	
+		if [ "$ANSWER_SWIG" == "Y" ] || [ "$ANSWER_SWIG" == "y" ]; then
+			install_swig purge
+		fi
+	else
+		echo -e -n "${COLOR_QUES}Do you want to install SWIG? [y/N]: ${COLOR_RESET}"
+		read ANSWER_SWIG
+		if [ "$ANSWER_SWIG" == "Y" ] || [ "$ANSWER_SWIG" == "y" ]; then
+			install_swig
+		fi
+	fi
+fi
 
-	##---------------------------------------------------------------##
-	##---------------------- Installing Eigen -----------------------##
-	##---------------------------------------------------------------##
-#	echo ""
-#	echo -e "${COLOR_BOLD}Installing Eigen ...${COLOR_RESET}"
-#	if [ -d "$INSTALL_DEPS_PREFIX/include/eigen3" ] || [ -d "$COMMON_INSTALL_PREFIX/include/eigen3" ]; then
-#		echo -e -n "${COLOR_QUES}Do you want to re-install Eigen 3.2.10? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_EIGEN
-#		if [ "$ANSWER_EIGEN" == "Y" ] || [ "$ANSWER_EIGEN" == "y" ]; then
-			bash $CURRENT_DIR/install/install_eigen.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#	    fi
-#	else
-#		bash $CURRENT_DIR/install/install_eigen.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#	fi
+##---------------------------------------------------------------##
+##---------------------- Installing Ipopt -----------------------##
+##---------------------------------------------------------------##
+echo ""
+echo -e "${COLOR_BOLD}Installing Ipopt ...${COLOR_RESET}"
+if $AUTOINSTALL; then
+	install_ipopt	purge
+else		
+	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' dls-libipopt|grep "install ok installed")
+	if [ "" != "$PKG_OK" ]; then
+		echo -e -n "${COLOR_QUES}Do you want to re-install Ipopt? [y/N]: ${COLOR_RESET}"
+		read ANSWER_IPOPT
+		if [ "$ANSWER_IPOPT" == "Y" ] || [ "$ANSWER_IPOPT" == "y" ]; then
+			install_ipopt purge
+	    fi
+	else
+		echo -e -n "${COLOR_QUES}Do you want to install Ipopt? [y/N]: ${COLOR_RESET}"
+		read ANSWER_IPOPT
+		if [ "$ANSWER_IPOPT" == "Y" ] || [ "$ANSWER_IPOPT" == "y" ]; then
+			install_ipopt
+		fi
+	fi
+fi
 
+##---------------------------------------------------------------##
+##--------------------- Installing qpOASES ----------------------##
+##---------------------------------------------------------------##
+echo ""
+echo -e "${COLOR_BOLD}Installing qpOASES ...${COLOR_RESET}"
+if $AUTOINSTALL; then
+	install_qpoases purge
+else
+	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' dls-qpoases|grep "install ok installed")
+	if [ "" != "$PKG_OK" ]; then
+		echo -e -n "${COLOR_QUES}Do you want to re-install qpOASES? [y/N]: ${COLOR_RESET}"
+		read ANSWER_QPOASES
+		if [ "$ANSWER_QPOASES" == "Y" ] || [ "$ANSWER_QPOASES" == "y" ]; then
+			install_qpoases purge
+		fi
+	else
+		echo -e -n "${COLOR_QUES}Do you want to install qpOASES? [y/N]: ${COLOR_RESET}"
+		read ANSWER_QPOASES
+		if [ "$ANSWER_QPOASES" == "Y" ] || [ "$ANSWER_QPOASES" == "y" ]; then
+			install_qpoases
+		fi
+	fi
+fi
 
-	##---------------------------------------------------------------##
-	##----------------------- Installing RBDL -----------------------##
-	##---------------------------------------------------------------##
-#	echo ""
-#	echo -e "${COLOR_BOLD}Installing RBDL ...${COLOR_RESET}"
-#	if [ -d "$INSTALL_DEPS_PREFIX/include/rbdl" ] || [ -d "$COMMON_INSTALL_PREFIX/include/rbdl" ]; then
-#		echo -e -n "${COLOR_QUES}Do you want to re-install RBDL 2.4.0? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_RBDL
-#		if [ "$ANSWER_RBDL" == "Y" ] || [ "$ANSWER_RBDL" == "y" ]; then
-			bash $CURRENT_DIR/install/install_rbdl.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#	    fi
-#	else
-#		bash $CURRENT_DIR/install/install_rbdl.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#	fi
+##---------------------------------------------------------------##
+##--------------------- Installing CMA-ES -----------------------##
+##---------------------------------------------------------------##
+echo ""
+echo -e "${COLOR_BOLD}Installing libcmaes ...${COLOR_RESET}"
+if $AUTOINSTALL; then
+	install_libcmaes purge
+else
+	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' dls-libcmaes|grep "install ok installed")
+	if [ "" != "$PKG_OK" ]; then
+		echo -e -n "${COLOR_QUES}Do you want to re-install libcmaes? [y/N]: ${COLOR_RESET}"
+		read ANSWER_LIBCMAES
+		if [ "$ANSWER_LIBCMAES" == "Y" ] || [ "$ANSWER_LIBCMAES" == "y" ]; then
+			install_libcmaes purge
+		fi
+	else
+		echo -e -n "${COLOR_QUES}Do you want to install libcmaes? [y/N]: ${COLOR_RESET}"
+		read ANSWER_LIBCMAES
+		if [ "$ANSWER_LIBCMAES" == "Y" ] || [ "$ANSWER_LIBCMAES" == "y" ]; then
+			install_libcmaes
+		fi
+	fi
+fi
 
-
-	##---------------------------------------------------------------##
-	##-------------------- Installing YAML-CPP ----------------------##
-	##---------------------------------------------------------------##
-#	echo ""
-#	echo -e "${COLOR_BOLD}Installing YAML-CPP ...${COLOR_RESET}"
-#	if [ -d "$INSTALL_DEPS_PREFIX/include/yaml-cpp" ] || [ -d "$COMMON_INSTALL_PREFIX/include/yaml-cpp" ]; then
-#		echo -e -n "${COLOR_QUES}Do you want to re-install YAML-CPP 0.5.2? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_YAMLCPP
-#		if [ "$ANSWER_YAMLCPP" == "Y" ] || [ "$ANSWER_YAMLCPP" == "y" ]; then
-			bash $CURRENT_DIR/install/install_yamlcpp.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#		fi
-#	else
-#		bash $CURRENT_DIR/install/install_yamlcpp.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#	fi
-
-
-	##---------------------------------------------------------------##
-	##------------------------ Installing SWIG ----------------------##
-	##---------------------------------------------------------------##
-#	echo ""
-#	echo -e "${COLOR_BOLD}Installing SWIG ...${COLOR_RESET}"
-#	if [ -d "$INSTALL_DEPS_PREFIX/share/swig" ] || [ -d "$COMMON_INSTALL_PREFIX/share/swig" ]; then
-#		echo -e -n "${COLOR_QUES}Do you want to re-install SWIG 3.0.12? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_SWIG
-#		if [ "$ANSWER_SWIG" == "Y" ] || [ "$ANSWER_SWIG" == "y" ]; then
-			bash $CURRENT_DIR/install/install_swig.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#		fi
-#	else
-#		bash $CURRENT_DIR/install/install_swig.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#	fi
-
-
-	##---------------------------------------------------------------##
-	##---------------------- Installing Ipopt -----------------------##
-	##---------------------------------------------------------------##
-#	echo ""
-#	echo -e "${COLOR_BOLD}Installing Ipopt ...${COLOR_RESET}"
-#	if [ -d "$INSTALL_DEPS_PREFIX/include/coin" ] || [ -d "$COMMON_INSTALL_PREFIX/include/coin" ]; then
-#		# Control will enter here if $DIRECTORY exists.
-#		echo -e -n "${COLOR_QUES}Do you want to re-install Ipopt 3.12.4? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_IPOPT
-#		if [ "$ANSWER_IPOPT" == "Y" ] || [ "$ANSWER_IPOPT" == "y" ]; then
-			bash $CURRENT_DIR/install/install_ipopt.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#    	fi
-#	else
-#		echo -e -n "${COLOR_QUES}Do you want to install Ipopt 3.12.4? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_IPOPT
-#		if [ "$ANSWER_IPOPT" == "Y" ] || [ "$ANSWER_IPOPT" == "y" ]; then
-#			bash $CURRENT_DIR/install/install_ipopt.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#		fi
-#	fi
-
-
-	##---------------------------------------------------------------##
-	##--------------------- Installing qpOASES ----------------------##
-	##---------------------------------------------------------------##
-#	echo ""
-#	echo -e "${COLOR_BOLD}Installing qpOASES ...${COLOR_RESET}"
-#	if [ -d "$INSTALL_DEPS_PREFIX/include/qpOASES" ] || [ -d "$COMMON_INSTALL_PREFIX/include/qpOASES" ]; then
-#		# Control will enter here if $DIRECTORY exists.
-#		echo -e -n "${COLOR_QUES}Do you want to re-install qpOASES 3.2.0? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_QPOASES
-#		if [ "$ANSWER_QPOASES" == "Y" ] || [ "$ANSWER_QPOASES" == "y" ]; then
-			bash $CURRENT_DIR/install/install_qpoases.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#    	fi
-#	else
-#		echo -e -n "${COLOR_QUES}Do you want to install qpOASES 3.2.0? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_QPOASES
-#		if [ "$ANSWER_QPOASES" == "Y" ] || [ "$ANSWER_QPOASES" == "y" ]; then
-#			bash $CURRENT_DIR/install/install_qpoases.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#		fi
-#	fi
-
-
-	##---------------------------------------------------------------##
-	##--------------------- Installing CMA-ES -----------------------##
-	##---------------------------------------------------------------##
-#	echo ""
-#	echo -e "${COLOR_BOLD}Installing libcmaes ...${COLOR_RESET}"
-#	if [ -d "$INSTALL_DEPS_PREFIX/include/libcmaes" ] || [ -d "$COMMON_INSTALL_PREFIX/include/yaml-cpp" ]; then
-#		# Control will enter here if $DIRECTORY exists.
-#		echo -e -n "${COLOR_QUES}Do you want to re-install libcmaes 0.9.5? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_LIBCMAES
-#		if [ "$ANSWER_LIBCMAES" == "Y" ] || [ "$ANSWER_LIBCMAES" == "y" ]; then
-			bash $CURRENT_DIR/install/install_libcmaes.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#	    fi
-#	else
-#		echo -e -n "${COLOR_QUES}Do you want to install libcmaes 0.9.5? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_LIBCMAES
-#		if [ "$ANSWER_LIBCMAES" == "Y" ] || [ "$ANSWER_LIBCMAES" == "y" ]; then
-#			bash $CURRENT_DIR/install/install_libcmaes.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#		fi
-#	fi
-
-
-	##---------------------------------------------------------------##
-	##-------------------- Installing PyADOLC -----------------------##
-	##---------------------------------------------------------------##
-	echo ""
-	echo -e "${COLOR_BOLD}Installing pyadolc ...${COLOR_RESET}"
-	if [ -d "/usr/local/lib/python2.7/dist-packages/adolc" ]; then
-		# Control will enter here if $DIRECTORY exists.
+##---------------------------------------------------------------##
+##-------------------- Installing PyADOLC -----------------------##
+##---------------------------------------------------------------##
+echo ""
+echo -e "${COLOR_BOLD}Installing pyadolc ...${COLOR_RESET}"
+if $AUTOINSTALL; then
+	install_pyadolc purge
+else
+	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' dls-pyadolc|grep "install ok installed")
+	if [ "" != "$PKG_OK" ]; then
 		echo -e -n "${COLOR_QUES}Do you want to re-install pyadolc? [y/N]: ${COLOR_RESET}"
 		read ANSWER_PYADOLC
 		if [ "$ANSWER_PYADOLC" == "Y" ] || [ "$ANSWER_PYADOLC" == "y" ]; then
-			bash $CURRENT_DIR/install/install_pyadolc.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-	    fi
+			install_pyadolc purge
+		fi
 	else
 		echo -e -n "${COLOR_QUES}Do you want to install pyadolc? [y/N]: ${COLOR_RESET}"
 		read ANSWER_PYADOLC
 		if [ "$ANSWER_PYADOLC" == "Y" ] || [ "$ANSWER_PYADOLC" == "y" ]; then
-			bash $CURRENT_DIR/install/install_pyadolc.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
+			install_pyadolc
 		fi
 	fi
-
-
-	##---------------------------------------------------------------##
-	##--------------------- Installing Octomap ----------------------##
-	##---------------------------------------------------------------##
-	echo ""
-	echo -e "${COLOR_BOLD}Installing Octomap ...${COLOR_RESET}"
-	if [ -d "/usr/local/include/octomap" ]; then
-		echo -e -n "${COLOR_QUES}Do you want to re-install Octomap 1.6.8? [y/N]: ${COLOR_RESET}"
-		read ANSWER_OCTOMAP
-		if [ "$ANSWER_OCTOMAP" == "Y" ] || [ "$ANSWER_OCTOMAP" == "y" ]; then
-			bash $CURRENT_DIR/install/install_octomap.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-		fi
-	else
-		echo -e -n "${COLOR_QUES}Do you want to install Octomap 1.6.8? [y/N]: ${COLOR_RESET}"
-		read ANSWER_OCTOMAP
-		if [ "$ANSWER_OCTOMAP" == "Y" ] || [ "$ANSWER_OCTOMAP" == "y" ]; then
-			bash $CURRENT_DIR/install/install_octomap.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-		fi
-	fi
-
-
-	##---------------------------------------------------------------##
-	##-------------------- Installing gnuplot ----------------------##
-	##---------------------------------------------------------------##
-#	echo ""
-#	echo -e "${COLOR_BOLD}Installing gnuplot ...${COLOR_RESET}"
-#	if [ -x "/usr/local/bin/gnuplot" ]; then
-#		echo -e -n "${COLOR_QUES}Do you want to re-install gnuplot 5.0.3? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_GNUPLOT
-#		if [ "$ANSWER_GNUPLOT" == "Y" ] || [ "$ANSWER_GNUPLOT" == "y" ]; then
-#			bash $CURRENT_DIR/install/install_gnuplot.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#		fi
-#	else
-#		echo -e -n "${COLOR_QUES}Do you want to install gnuplot 5.0.3? [y/N]: ${COLOR_RESET}"
-#		read ANSWER_GNUPLOT
-#		if [ "$ANSWER_GNUPLOT" == "Y" ] || [ "$ANSWER_GNUPLOT" == "y" ]; then
-#			bash $CURRENT_DIR/install/install_gnuplot.sh $CURRENT_OS $INSTALL_DEPS_PREFIX False
-#		fi
-#	fi
 fi
+
