@@ -226,7 +226,7 @@ else
 	##---------------------------------------------------------------##
 	echo ""
 	echo -e "${COLOR_BOLD}Installing libcmaes ...${COLOR_RESET}"
-	if [ -d "$INSTALL_DEPS_PREFIX/include/libcmaes" ] || [ -d "$COMMON_INSTALL_PREFIX/include/yaml-cpp" ]; then
+	if [ -d "$INSTALL_DEPS_PREFIX/include/libcmaes" ]; then ## || [ -d "$COMMON_INSTALL_PREFIX/include/yaml-cpp" ]; then
 		# Control will enter here if $DIRECTORY exists.
 		echo -e -n "${COLOR_QUES}Do you want to re-install libcmaes 0.9.5? [y/N]: ${COLOR_RESET}"
 		read ANSWER_LIBCMAES
