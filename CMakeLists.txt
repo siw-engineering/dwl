@@ -10,7 +10,7 @@ message("Released under the BSD 3-Clause License.")
 # Defining the dwl install prefix
 set(INSTALL_DEPS_PREFIX /usr/local CACHE STRINGS "DWL thirdparty install path")
 
-# Checking if the project is compiling with Catkin or CMake
+# Compiling with Catkin
 message("Compiling DWL library as a Catkin project")
 find_package(catkin REQUIRED)
 set(WITH_CATKIN ON)
