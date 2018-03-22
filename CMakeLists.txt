@@ -10,21 +10,10 @@ message("Released under the BSD 3-Clause License.")
 # Defining the dwl install prefix
 set(INSTALL_DEPS_PREFIX /usr/local CACHE STRINGS "DWL thirdparty install path")
 
-
 # Checking if the project is compiling with Catkin or CMake
-set(CATKIN_CALL "${CATKIN_DEVEL_PREFIX}")
-if(CATKIN_CALL)
-	message("Compiling DWL library as a Catkin project")
-	find_package(catkin REQUIRED)
-	set(WITH_CATKIN ON)
-else()
-	message("Compiling DWL library as a CMake project")
-	# Setting the output directories for libraries and executables
-	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR}/lib)
-	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR}/lib)
-	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR}/bin)
-	set(WITH_CATKIN OFF)
-endif()
+message("Compiling DWL library as a Catkin project")
+find_package(catkin REQUIRED)
+set(WITH_CATKIN ON)
 
 # Set a default build type to 'Release' if none was specified
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -106,6 +95,19 @@ endif()
 
 # Adding the dwl source
 add_subdirectory(dwl)
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/sample/
+            DESTINATION DESTINATION share/${PROJECT_NAME}/sample
+            FILES_MATCHING PATTERN "*.yaml*")
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/sample/
+            DESTINATION DESTINATION share/${PROJECT_NAME}/sample
+            FILES_MATCHING PATTERN "*.urdf*")
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/sample/python
+            DESTINATION DESTINATION share/${PROJECT_NAME}/sample
+            FILES_MATCHING PATTERN "*.*")
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/config/
+            DESTINATION DESTINATION share/${PROJECT_NAME}/config
+            FILES_MATCHING PATTERN "*.*")
 
 # Including the dwl include directories for compiling sample, test or benchmark executables
 include_directories(${EXPORT_INCLUDE_DIRS})
