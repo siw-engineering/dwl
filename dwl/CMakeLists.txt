@@ -147,6 +147,14 @@ if(WITH_CATKIN)
 		DEPENDS  ${DEPENDENCIES_LIBRARIES}
 		         ${DEPENDENCIES_LIBRARY_DIRS}
 		         ${DEPENDENCIES_INCLUDE_DIRS})
+
+    # Install C++ library and header files
+    install(TARGETS dwl
+            LIBRARY DESTINATION "${INSTALL_LIB_PREFIX}")
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/dwl/
+            DESTINATION DESTINATION "${INSTALL_INCLUDE_PREFIX}"
+            FILES_MATCHING PATTERN "*.h*")
+
 else()
 	# Creating a dwl-config.cmake file for the use from the build tree
 	set(DWL_INCLUDE_DIRS  ${INCLUDE_DIRS}
