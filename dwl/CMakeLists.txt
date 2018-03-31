@@ -123,6 +123,13 @@ if(octomap_FOUND)
 	list(APPEND ${PROJECT_NAME}_SOURCES  dwl/environment/ObstacleMap.cpp)
 endif()
 
+if(WITH_CATKIN)
+	catkin_package(
+		INCLUDE_DIRS . ${DEPENDENCIES_INCLUDE_DIRS}
+		LIBRARIES  ${PROJECT_NAME} 
+                DEPENDS  ${DEPENDENCIES_LIBRARIES})
+endif()
+
 # Adding the dwl library
 add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
 target_link_libraries(${PROJECT_NAME} ${DEPENDENCIES_LIBRARIES})
@@ -140,14 +147,8 @@ set(EXPORT_INCLUDE_DIRS  ${INCLUDE_DIRS}
 export(PACKAGE dwl)
 
 # Adding the description of the dwl library
-if(WITH_CATKIN)
-	catkin_package(
-		INCLUDE_DIRS . ${DEPENDENCIES_INCLUDE_DIRS}
-		LIBRARIES  ${PROJECT_NAME} 
-		DEPENDS  ${DEPENDENCIES_LIBRARIES}
-		         ${DEPENDENCIES_LIBRARY_DIRS}
-		         ${DEPENDENCIES_INCLUDE_DIRS})
 
+if(WITH_CATKIN)
     # Install C++ library and header files
     install(TARGETS dwl
             LIBRARY DESTINATION "${INSTALL_LIB_PREFIX}")
