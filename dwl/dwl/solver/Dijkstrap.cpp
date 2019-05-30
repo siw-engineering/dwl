@@ -31,11 +31,11 @@ bool Dijkstrap::compute(Vertex source,
 						double computation_time)
 {
 	if (!is_set_adjacency_model_) {
-		printf(RED "Could not computed the shortest path because it is required to defined an adjacency model\n"
+		printf(RED_ "Could not computed the shortest path because it is required to defined an adjacency model\n"
 				COLOR_RESET);
 		return false;
 	} else if (adjacency_->isLatticeRepresentation()) {
-		printf(RED "Could not computed the shortest path because it is lattice representation\n" COLOR_RESET);
+		printf(RED_ "Could not computed the shortest path because it is lattice representation\n" COLOR_RESET);
 		return false;
 	}
 

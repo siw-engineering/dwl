@@ -29,7 +29,7 @@ void normalizeAngle(double& angle,
 			break;
 
 		default:
-			printf(YELLOW "Warning: it was not normalize the angle"
+			printf(YELLOW_ "Warning: it was not normalize the angle"
 					" because the angle notation is incoherent \n" COLOR_RESET);
 			break;
 	}
@@ -56,7 +56,7 @@ void computePlaneParameters(Eigen::Vector3d& normal,
 {
 	unsigned int num_points = points.size();
 	if (num_points < 3) {
-		printf(YELLOW "Warning: could not computed the plane parameter"
+		printf(YELLOW_ "Warning: could not computed the plane parameter"
 				" with less of 3 points\n" COLOR_RESET);
 	} else if (num_points == 3) {
 		// Determinate the sign of the angles in order to compute a normal

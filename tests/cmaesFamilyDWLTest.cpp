@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 	optimal_control.addDynamicalSystem(dynamical_system);
 	optimal_control.addCost(cost);
 
-	solver->setFromConfigFile("../config/cmaes_config.yaml");
+        solver->setFromConfigFile("cmaes_config.yaml");
 	solver->init();
 	solver->compute();
 	Eigen::VectorXd sol = solver->getSolution();

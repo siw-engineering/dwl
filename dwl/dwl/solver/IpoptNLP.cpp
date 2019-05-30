@@ -38,7 +38,7 @@ void IpoptNLP::setFromConfigFile(std::string filename)
 
 	// Parsing the configuration file
 	std::string ipopt_ns = "ipopt";
-	printf(BLUE "Reading the configuration parameters from the %s namespace.\n" COLOR_RESET,
+	printf(BLUE_ "Reading the configuration parameters from the %s namespace.\n" COLOR_RESET,
 			ipopt_ns.c_str());
 
 	// Getting the different nodes
@@ -282,19 +282,19 @@ bool IpoptNLP::init()
 	setMuStrategy(mu_strategy_);
 
 	if (!model_->isCostGradientImplemented())
-		printf(BLUE "Info: Computing the Gradient using numerical differentiation.\n" COLOR_RESET);
+		printf(BLUE_ "Info: Computing the Gradient using numerical differentiation.\n" COLOR_RESET);
 
 	// Enable/disable the numerical computation of the Jacobian
 	if (!model_->isConstraintJacobianImplemented() || jac_approximation_) {
 		// Computing Jacobian numerically (do not need to implement or configure)
-		printf(BLUE "Info: Computing the Jacobian using finite-difference.\n" COLOR_RESET);
+		printf(BLUE_ "Info: Computing the Jacobian using finite-difference.\n" COLOR_RESET);
 		app_->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
 	}
 
 	// Enable/disable the numerical computation of the Hessian
 	if (!model_->isLagrangianHessianImplemented() || hess_approximation_) {
 		// Computing Hessian numerically (do not need to implement or configure)
-		printf(BLUE "Info: Computing the Lagrangian Hessian using limited-memory.\n" COLOR_RESET);
+		printf(BLUE_ "Info: Computing the Lagrangian Hessian using limited-memory.\n" COLOR_RESET);
 		app_->Options()->SetStringValue("hessian_approximation", "limited-memory");
 	}
 

@@ -90,7 +90,7 @@ void PreviewLocomotion::readPreviewSequence(PreviewData& data,
 	// Reading the number of datapoint
 	int num_datapoint;
 	if (!yaml_reader.read(num_datapoint, "number_datapoint", datapoint_ns)) {
-		printf(RED "Error: the number of datapoint was not found\n" COLOR_RESET);
+		printf(RED_ "Error: the number of datapoint was not found\n" COLOR_RESET);
 		return;
 	}
 
@@ -118,7 +118,7 @@ void PreviewLocomotion::readPreviewSequence(VelocityCommand& command,
 {
 	// Checking that the robot model was initialized
 	if (!robot_model_) {
-		printf(RED "Error: the robot model was not initialized\n" COLOR_RESET);
+		printf(RED_ "Error: the robot model was not initialized\n" COLOR_RESET);
 		return;
 	}
 
@@ -135,31 +135,31 @@ void PreviewLocomotion::readPreviewSequence(VelocityCommand& command,
 
 	// Reading the command
 	if (!yaml_reader.read(command.linear, "linear", command_ns)) {
-		printf(RED "Error: the linear velocity was not found\n" COLOR_RESET);
+		printf(RED_ "Error: the linear velocity was not found\n" COLOR_RESET);
 		return;
 	}
 	if (!yaml_reader.read(command.angular, "angular", command_ns)) {
-		printf(RED "Error: the angular velocity was not found\n" COLOR_RESET);
+		printf(RED_ "Error: the angular velocity was not found\n" COLOR_RESET);
 		return;
 	}
 
 
 	// Reading the state
 	if (!yaml_reader.read(state.height, "height", state_ns)) {
-		printf(RED "Error: the CoM height was not found\n" COLOR_RESET);
+		printf(RED_ "Error: the CoM height was not found\n" COLOR_RESET);
 		return;
 	}
 	if (!yaml_reader.read(state.com_pos, "com_pos", state_ns)) {
-		printf(RED "Error: the CoM position was not found\n" COLOR_RESET);
+		printf(RED_ "Error: the CoM position was not found\n" COLOR_RESET);
 		return;
 	}
 	if (!yaml_reader.read(state.com_vel, "com_vel", state_ns)) {
-		printf(RED "Error: the CoM velocity was not found\n" COLOR_RESET);
+		printf(RED_ "Error: the CoM velocity was not found\n" COLOR_RESET);
 		return;
 	}
 	std::vector<std::string> support;
 	if (!yaml_reader.read(support, "support", state_ns)) {
-		printf(RED "Error: the support was not found\n" COLOR_RESET);
+		printf(RED_ "Error: the support was not found\n" COLOR_RESET);
 		return;
 	}
 	state.support.clear();
@@ -170,7 +170,7 @@ void PreviewLocomotion::readPreviewSequence(VelocityCommand& command,
 	// Reading the number of phases
 	int num_phases;
 	if (!yaml_reader.read(num_phases, "number_phase",  control_ns)) {
-		printf(RED "Error: the number_phase was not found\n" COLOR_RESET);
+		printf(RED_ "Error: the number_phase was not found\n" COLOR_RESET);
 		return;
 	}
 	control.params.resize(num_phases);
@@ -183,7 +183,7 @@ void PreviewLocomotion::readPreviewSequence(VelocityCommand& command,
 
 		// Reading the preview duration
 		if (!yaml_reader.read(control.params[k].duration, "duration", phase_ns)) {
-			printf(RED "Error: the duration of phase_%i was not found\n"
+			printf(RED_ "Error: the duration of phase_%i was not found\n"
 					COLOR_RESET, k);
 			return;
 		}
@@ -233,7 +233,7 @@ void PreviewLocomotion::multiPhasePreview(ReducedBodyTrajectory& trajectory,
 {
 	// Checking that the robot model was initialized
 	if (!robot_model_) {
-		printf(RED "Error: the robot model was not initialized\n" COLOR_RESET);
+		printf(RED_ "Error: the robot model was not initialized\n" COLOR_RESET);
 		return;
 	}
 

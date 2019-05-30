@@ -126,7 +126,7 @@ void WholeBodyDynamics::computeFloatingBaseInverseDynamics(rbd::Vector6d& base_a
 //			RigidBodyDynamics::ForwardDynamics(system_.getRBDModel(), q, q_dot, tau, q_ddot, &fext);
 //			base_acc(rbd::LZ) = q_ddot(0);
 		} else
-			printf(YELLOW "WARNING: this is not a floating-base system\n" COLOR_RESET);
+			printf(YELLOW_ "WARNING: this is not a floating-base system\n" COLOR_RESET);
 	}
 
 	// Converting the generalized joint forces to base wrench and joint forces
@@ -422,7 +422,7 @@ void WholeBodyDynamics::computeCenterOfPressure(Eigen::Vector3d& cop_pos,
 	// Sanity check: checking if there are contact information and the size
 	if ((contact_for.size() == 0) || (contact_pos.size() == 0) ||
 			contact_for.size() != contact_pos.size()) {
-		printf(YELLOW "Warning: could not compute the CoP because there is"
+		printf(YELLOW_ "Warning: could not compute the CoP because there is"
 				" missing information\n" COLOR_RESET);
 		return;
 	}
@@ -438,7 +438,7 @@ void WholeBodyDynamics::computeCenterOfPressure(Eigen::Vector3d& cop_pos,
 		if (for_it != contact_for.end())
 			force = for_it->second;
 		else {
-			printf(YELLOW "Warning: there is missing the contact force of"
+			printf(YELLOW_ "Warning: there is missing the contact force of"
 					" %s\n" COLOR_RESET, name.c_str());
 			return;
 		}
@@ -449,7 +449,7 @@ void WholeBodyDynamics::computeCenterOfPressure(Eigen::Vector3d& cop_pos,
 		if (pos_it != contact_pos.end())
 			position = pos_it->second;
 		else {
-			printf(YELLOW "Warning: there is missing the contact position of"
+			printf(YELLOW_ "Warning: there is missing the contact position of"
 					" %s\n" COLOR_RESET, name.c_str());
 			return;
 		}
@@ -473,7 +473,7 @@ void WholeBodyDynamics::computeZeroMomentPoint(Eigen::Vector3d& zmp_pos,
 											   const double& height)
 {
 	if (height < 0.) {
-		printf(YELLOW "Warning: the height should be a positive value\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: the height should be a positive value\n" COLOR_RESET);
 	}
 
 	double omega = sqrt(system_.getGravityAcceleration() / height);
@@ -488,7 +488,7 @@ void WholeBodyDynamics::computeInstantaneousCapturePoint(Eigen::Vector3d& icp_po
 		                                                 const double& height)
 {
 	if (height < 0.) {
-		printf(YELLOW "Warning: the height should be a positive value\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: the height should be a positive value\n" COLOR_RESET);
 	}
 
 	double omega = sqrt(system_.getGravityAcceleration() / height);
@@ -503,7 +503,7 @@ void WholeBodyDynamics::computeCentroidalMomentPivot(Eigen::Vector3d& cmp_pos,
 													 const rbd::BodyVector6d& contact_for)
 {
 	if (height < 0.) {
-		printf(YELLOW "Warning: the height should be a positive value\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: the height should be a positive value\n" COLOR_RESET);
 	}
 
 	// Getting the names of the feet
@@ -521,7 +521,7 @@ void WholeBodyDynamics::computeCentroidalMomentPivot(Eigen::Vector3d& cmp_pos,
 		if (for_it != contact_for.end())
 			force = for_it->second;
 		else {
-			printf(YELLOW "Warning: there is missing the contact force of"
+			printf(YELLOW_ "Warning: there is missing the contact force of"
 					" %s\n" COLOR_RESET, name.c_str());
 			return;
 		}
@@ -559,7 +559,7 @@ void WholeBodyDynamics::computeCoMTorque(Eigen::Vector3d& torque,
 		if (for_it != contact_for.end())
 			force = for_it->second;
 		else {
-			printf(YELLOW "Warning: there is missing the contact force of"
+			printf(YELLOW_ "Warning: there is missing the contact force of"
 					" %s\n" COLOR_RESET, name.c_str());
 			return;
 		}
@@ -579,7 +579,7 @@ void WholeBodyDynamics::estimateGroundReactionForces(rbd::BodyVector6d& contact_
 {
 	// Sanity check: checking if there are contact information and the size
 	if (contact_pos.size() == 0) {
-		printf(YELLOW "Warning: could not compute the CoP because there is"
+		printf(YELLOW_ "Warning: could not compute the CoP because there is"
 				" missing information" COLOR_RESET);
 		return;
 	}
@@ -598,7 +598,7 @@ void WholeBodyDynamics::estimateGroundReactionForces(rbd::BodyVector6d& contact_
 		if (pos_it != contact_pos.end())
 			position = pos_it->second;
 		else {
-			printf(YELLOW "Warning: there is missing the contact position of"
+			printf(YELLOW_ "Warning: there is missing the contact position of"
 					" %s\n" COLOR_RESET, name.c_str());
 			return;
 		}

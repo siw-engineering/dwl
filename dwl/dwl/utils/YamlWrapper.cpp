@@ -435,7 +435,7 @@ bool YamlWrapper::getNode(YAML::Node& node,
 						  const YamlNamespace& ns)
 {
 	if (!is_file_) {
-		printf(YELLOW "Warning: the filename needs to be defined\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: the filename needs to be defined\n" COLOR_RESET);
 		return false;
 	}
 

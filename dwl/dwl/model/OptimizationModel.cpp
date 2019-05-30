@@ -66,7 +66,7 @@ void OptimizationModel::defineAsSoftConstraint()
 
 void OptimizationModel::getStartingPoint(double* decision, int decision_dim)
 {
-	printf(YELLOW "Warning: there is not defined the warm point, default in the origin\n" COLOR_RESET);
+	printf(YELLOW_ "Warning: there is not defined the warm point, default in the origin\n" COLOR_RESET);
 
 	// Defined the warm point in the origin
 	Eigen::Map<Eigen::VectorXd> warm_point(decision, decision_dim);
@@ -80,7 +80,7 @@ void OptimizationModel::evaluateBounds(double* decision_lbound, int decision_dim
 									   double* constraint_ubound, int constraint_dim2)
 {
 	if (first_time_) {
-		printf(YELLOW "Warning: there is not defined the bounds, default as boundless\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: there is not defined the bounds, default as boundless\n" COLOR_RESET);
 		first_time_ = false;
 	}
 
@@ -101,7 +101,7 @@ void OptimizationModel::evaluateBounds(double* decision_lbound, int decision_dim
 void OptimizationModel::evaluateCosts(double& cost,
 									  const double* decision, int decision_dim)
 {
-	printf(YELLOW "Warning: No cost function is implemented\n" COLOR_RESET);
+	printf(YELLOW_ "Warning: No cost function is implemented\n" COLOR_RESET);
 	cost = 0.;
 }
 

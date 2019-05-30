@@ -24,7 +24,7 @@ Feature::~Feature()
 
 void Feature::reset(robot::Robot* robot)
 {
-	printf(BLUE "Setting the robot properties in the %s feature \n"
+	printf(BLUE_ "Setting the robot properties in the %s feature \n"
 			COLOR_RESET, name_.c_str());
 	robot_ = robot;
 }
@@ -39,7 +39,7 @@ std::string Feature::getName()
 void Feature::computeCost(double& cost_value,
 						  const Terrain& terrain_info)
 {
-	printf(YELLOW "Could not computed the cost value of the terrain because"
+	printf(YELLOW_ "Could not computed the cost value of the terrain because"
 			" was not defined\n" COLOR_RESET);
 }
 
@@ -47,7 +47,7 @@ void Feature::computeCost(double& cost_value,
 void Feature::computeCost(double& cost_value,
 						  const RobotAndTerrain& info)
 {
-	printf(YELLOW "Could not computed the cost value of the robot because was"
+	printf(YELLOW_ "Could not computed the cost value of the robot because was"
 			" not defined\n" COLOR_RESET);
 }
 

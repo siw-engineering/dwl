@@ -23,11 +23,11 @@ AdjacencyModel::~AdjacencyModel()
 void AdjacencyModel::reset(robot::Robot* robot,
 						   environment::TerrainMap* environment)
 {
-	printf(BLUE "Setting the robot information in the %s adjacency model \n"
+	printf(BLUE_ "Setting the robot information in the %s adjacency model \n"
 			COLOR_RESET, name_.c_str());
 	robot_ = robot;
 
-	printf(BLUE "Setting the environment information in the %s adjacency model"
+	printf(BLUE_ "Setting the environment information in the %s adjacency model"
 			" \n" COLOR_RESET, name_.c_str());
 	terrain_ = environment;
 
@@ -40,7 +40,7 @@ void AdjacencyModel::computeAdjacencyMap(AdjacencyMap& adjacency_map,
 										 Vertex source,
 										 Vertex target)
 {
-	printf(YELLOW "Could compute the whole adjacency map because it was not"
+	printf(YELLOW_ "Could compute the whole adjacency map because it was not"
 			" defined an adjacency model\n" COLOR_RESET);
 }
 
@@ -73,7 +73,7 @@ void AdjacencyModel::getTheClosestStartAndGoalVertex(Vertex& closest_source,
 			vertex_map.push_back(vertex_iter->first);
 		}
 	} else {
-		printf(RED "Could not get the closest start and goal vertex because"
+		printf(RED_ "Could not get the closest start and goal vertex because"
 				" there is not terrain information \n" COLOR_RESET);
 		return;
 	}
@@ -171,7 +171,7 @@ void AdjacencyModel::getTheClosestVertex(Vertex& closest_vertex,
 			vertex_map.push_back(vertex_iter->first);
 		}
 	} else {
-		printf(RED "Could not get the closest start and goal vertex because"
+		printf(RED_ "Could not get the closest start and goal vertex because"
 				" there is not terrain information \n" COLOR_RESET);
 		return;
 	}
@@ -275,7 +275,7 @@ void AdjacencyModel::addFeature(environment::Feature* feature)
 {
 	double weight;
 	feature->getWeight(weight);
-	printf(GREEN "Adding the %s feature with a weight of %f\n" COLOR_RESET,
+	printf(GREEN_ "Adding the %s feature with a weight of %f\n" COLOR_RESET,
 			feature->getName().c_str(), weight);
 	features_.push_back(feature);
 	is_added_feature_ = true;

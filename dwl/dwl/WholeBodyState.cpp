@@ -176,7 +176,7 @@ const Eigen::VectorXd& WholeBodyState::getJointPosition() const
 const double& WholeBodyState::getJointPosition(const unsigned int& index) const
 {
 	if (index >= num_joints_) {
-		printf(YELLOW "Warning: the index is bigger than the number of joints."
+		printf(YELLOW_ "Warning: the index is bigger than the number of joints."
 				" It cannot be set the joint position.\n"
 				COLOR_RESET);
 		return default_joint_value_;
@@ -195,7 +195,7 @@ const Eigen::VectorXd& WholeBodyState::getJointVelocity() const
 const double& WholeBodyState::getJointVelocity(const unsigned int& index) const
 {
 	if (index >= num_joints_) {
-		printf(YELLOW "Warning: the index is bigger than the number of joints."
+		printf(YELLOW_ "Warning: the index is bigger than the number of joints."
 				" It cannot be set the joint velocity.\n"
 				COLOR_RESET);
 		return default_joint_value_;
@@ -214,7 +214,7 @@ const Eigen::VectorXd& WholeBodyState::getJointAcceleration() const
 const double& WholeBodyState::getJointAcceleration(const unsigned int& index) const
 {
 	if (index >= num_joints_) {
-		printf(YELLOW "Warning: the index is bigger than the number of joints."
+		printf(YELLOW_ "Warning: the index is bigger than the number of joints."
 				" It cannot be set the joint acceleration.\n"
 				COLOR_RESET);
 		return default_joint_value_;
@@ -227,7 +227,7 @@ const double& WholeBodyState::getJointAcceleration(const unsigned int& index) co
 const double& WholeBodyState::getJointEffort(const unsigned int& index) const
 {
 	if (index >= num_joints_) {
-		printf(YELLOW "Warning: the index is bigger than the number of joints."
+		printf(YELLOW_ "Warning: the index is bigger than the number of joints."
 				" It cannot be get the joint effort.\n"
 				COLOR_RESET);
 		return default_joint_value_;
@@ -746,7 +746,7 @@ void WholeBodyState::setJointPosition(const double& pos,
 									  const unsigned int& index)
 {
 	if (index >= num_joints_) {
-		printf(YELLOW "Warning: the index is bigger than the number of joints."
+		printf(YELLOW_ "Warning: the index is bigger than the number of joints."
 				" It cannot be set the joint position.\n"
 				COLOR_RESET);
 		return;
@@ -766,7 +766,7 @@ void WholeBodyState::setJointVelocity(const double& vel,
 									  const unsigned int& index)
 {
 	if (index >= num_joints_) {
-		printf(YELLOW "Warning: the index is bigger than the number of joints."
+		printf(YELLOW_ "Warning: the index is bigger than the number of joints."
 				" It cannot be set the joint velocity.\n"
 				COLOR_RESET);
 		return;
@@ -786,7 +786,7 @@ void WholeBodyState::setJointAcceleration(const double& acc,
 										  const unsigned int& index)
 {
 	if (index >= num_joints_) {
-		printf(YELLOW "Warning: the index is bigger than the number of joints."
+		printf(YELLOW_ "Warning: the index is bigger than the number of joints."
 				" It cannot be set the joint acceleration.\n"
 				COLOR_RESET);
 		return;
@@ -800,7 +800,7 @@ void WholeBodyState::setJointEffort(const double& eff,
 									const unsigned int& index)
 {
 	if (index >= num_joints_) {
-		printf(YELLOW "Warning: the index is bigger than the number of joints."
+		printf(YELLOW_ "Warning: the index is bigger than the number of joints."
 				" It cannot be set the joint effort.\n"
 				COLOR_RESET);
 		return;

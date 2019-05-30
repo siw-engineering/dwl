@@ -74,7 +74,7 @@ void LatticeBasedBodyAdjacency::getSuccessors(std::list<Edge>& successors,
 			}
 		}
 	} else
-		printf(RED "Could not computed the successors because there is not terrain information \n"
+		printf(RED_ "Could not computed the successors because there is not terrain information \n"
 				COLOR_RESET);
 }
 

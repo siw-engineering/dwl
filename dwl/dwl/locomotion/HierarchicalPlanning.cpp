@@ -44,12 +44,12 @@ bool HierarchicalPlanning::compute(Pose current_pose)
 
 		// Computing the body path using a search tree algorithm
 		if (!motion_planner_->computePath(body_path_, current_pose, goal_pose_)) {
-			printf(YELLOW "Could not found an approximated body path\n" COLOR_RESET);
+			printf(YELLOW_ "Could not found an approximated body path\n" COLOR_RESET);
 			return false;
 		}
 
 		if (!contact_planner_->computeContactSequence(contacts_sequence_, body_path_)) {
-			printf(YELLOW "Could not computed the foothold sequence \n" COLOR_RESET);
+			printf(YELLOW_ "Could not computed the foothold sequence \n" COLOR_RESET);
 			return false;
 		}
 	} else

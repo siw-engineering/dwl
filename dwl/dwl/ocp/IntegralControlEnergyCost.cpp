@@ -24,7 +24,7 @@ void IntegralControlEnergyCost::compute(double& cost,
 {
 	// Checking sizes
 	if (state.joint_eff.size() != locomotion_weights_.joint_eff.size()) {
-		printf(RED "FATAL: the joint efforts dimensions are not consistent\n" COLOR_RESET);
+		printf(RED_ "FATAL: the joint efforts dimensions are not consistent\n" COLOR_RESET);
 		exit(EXIT_FAILURE);
 	}
 

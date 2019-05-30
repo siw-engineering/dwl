@@ -23,11 +23,11 @@ ContactPlanning::~ContactPlanning()
 void ContactPlanning::reset(robot::Robot* robot,
 							environment::TerrainMap* terrain)
 {
-	printf(BLUE "Setting the robot properties in the %s contact planner \n"
+	printf(BLUE_ "Setting the robot properties in the %s contact planner \n"
 			COLOR_RESET, name_.c_str());
 	robot_ = robot;
 
-	printf(BLUE "Setting the terrain information in the %s contact"
+	printf(BLUE_ "Setting the terrain information in the %s contact"
 			" planner \n" COLOR_RESET, name_.c_str());
 	terrain_ = terrain;
 
@@ -40,7 +40,7 @@ void ContactPlanning::addFeature(environment::Feature* feature)
 {
 	double weight;
 	feature->getWeight(weight);
-	printf(GREEN "Adding the %s feature with a weight of %f to the %s contact"
+	printf(GREEN_ "Adding the %s feature with a weight of %f to the %s contact"
 			" planner\n" COLOR_RESET, feature->getName().c_str(), weight,
 			name_.c_str());
 	features_.push_back(feature);
