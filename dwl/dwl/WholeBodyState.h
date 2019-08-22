@@ -403,12 +403,7 @@ class WholeBodyState
 		 * @param[in] name The contact name
 		 * @return The contact wrench expressed in the base frame
 		 */
-		const rbd::Vector6d& getContactWrench_W(const std::string& name) const;		
-
-		/** @brief Gets all contact wrenches expressed the world frame
-		 * @return All contact wrenches expressed in the base frame
-		 */
-		const rbd::BodyVector6d& getContactWrench_W() const;
+		const rbd::Vector6d getContactWrench_W(const std::string& name) const;		
 
 		/** @brief Gets the contact condition (active or inactive)
 		 * @param[in] name The contact name
