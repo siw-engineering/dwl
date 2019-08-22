@@ -84,7 +84,7 @@ void GridBasedBodyAdjacency::computeAdjacencyMap(AdjacencyMap& adjacency_map,
 			}
 		}
 	} else
-		printf(RED "Could not computed the adjacency map because there is not"
+		printf(RED_ "Could not computed the adjacency map because there is not"
 				" terrain information \n" COLOR_RESET);
 }
 
@@ -119,7 +119,7 @@ void GridBasedBodyAdjacency::getSuccessors(std::list<Edge>& successors,
 			}
 		}
 	} else
-		printf(RED "Could not computed the successors because there is not"
+		printf(RED_ "Could not computed the successors because there is not"
 				" terrain information \n" COLOR_RESET);
 }
 
@@ -284,7 +284,7 @@ void GridBasedBodyAdjacency::searchNeighbors(std::vector<Vertex>& neighbor_state
 			}
 		}
 	} else
-		printf(RED "Could not searched the neighbors because there is not"
+		printf(RED_ "Could not searched the neighbors because there is not"
 				" terrain information \n" COLOR_RESET);
 }
 

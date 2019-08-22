@@ -196,14 +196,14 @@ void SpaceDiscretization::stateToKey(unsigned short int& key,
 {
 	if (position) {
 		if (position_resolution_ == 0)
-			printf(RED "Could not get the key because it was not defined the"
+			printf(RED_ "Could not get the key because it was not defined the"
 					" position resolution\n" COLOR_RESET);
 		else
 			key = (unsigned short int) (floor(state / position_resolution_) + max_key_val_);
 	}
 	else {
 		if (angular_resolution_ == 0)
-			printf(RED "Could not get the key because it was not defined the "
+			printf(RED_ "Could not get the key because it was not defined the "
 					"angular resolution\n" COLOR_RESET);
 		else {
 			math::normalizeAngle(state, ZeroTo2Pi);
@@ -221,14 +221,14 @@ void SpaceDiscretization::keyToState(double& state,
 {
 	if (position) {
 		if (position_resolution_ == 0)
-			printf(RED "Could not state of the key because it was not defined "
+			printf(RED_ "Could not state of the key because it was not defined "
 					"the position resolution\n"	COLOR_RESET);
 		else
 			state = ((double) ((int) key - (int) max_key_val_) + 0.5) * position_resolution_;
 	}
 	else {
 		if (angular_resolution_ == 0)
-			printf(RED "Could not the state because it was not defined the "
+			printf(RED_ "Could not the state because it was not defined the "
 					"angular resolution\n"	COLOR_RESET);
 		else {
 			unsigned short int max_key_yaw_val_ = 0;
@@ -319,7 +319,7 @@ void SpaceDiscretization::stateVertexToEnvironmentVertex(Vertex& environment_ver
 			break;
 
 		default:
-			printf(RED "Could not computed the environment vertex because it "
+			printf(RED_ "Could not computed the environment vertex because it "
 					"is required to define a compatible definition of state\n"
 					COLOR_RESET);
 			break;

@@ -179,7 +179,7 @@ void OptimalControl::evaluateBounds(double* decision_lbound, int decision_dim1,
 					// Checking the bound dimension
 					current_bound_dim = dynamical_system_->getConstraintDimension();
 					if (current_bound_dim != (unsigned) lower_bound.size()) {
-						printf(RED "FATAL: the bound dimension of %s constraint is not consistent\n"
+						printf(RED_ "FATAL: the bound dimension of %s constraint is not consistent\n"
 								COLOR_RESET, dynamical_system_->getName().c_str());
 						exit(EXIT_FAILURE);
 					}
@@ -191,7 +191,7 @@ void OptimalControl::evaluateBounds(double* decision_lbound, int decision_dim1,
 				// Checking the bound dimension
 				current_bound_dim = constraints_[j-1]->getConstraintDimension();
 				if (current_bound_dim != (unsigned) lower_bound.size()) {
-					printf(RED "FATAL: the bound dimension of %s constraint is not consistent\n"
+					printf(RED_ "FATAL: the bound dimension of %s constraint is not consistent\n"
 							COLOR_RESET, constraints_[j-1]->getName().c_str());
 					exit(EXIT_FAILURE);
 				}
@@ -229,7 +229,7 @@ void OptimalControl::evaluateBounds(double* decision_lbound, int decision_dim1,
 
 		// Checking the terminal bound dimension
 		if (terminal_constraint_dimension_ != (unsigned) terminal_lower_bound.size()) {
-			printf(RED "FATAL: the terminal bound dimension is not consistent\n");
+			printf(RED_ "FATAL: the terminal bound dimension is not consistent\n");
 			exit(EXIT_FAILURE);
 		}
 
@@ -251,7 +251,7 @@ void OptimalControl::evaluateConstraints(double* constraint, int constraint_dim,
 	full_constraint.setZero();
 
 	if (state_dimension_ != (decision_var.size() / horizon_)) {
-		printf(RED "FATAL: the state and decision dimensions are not consistent\n" COLOR_RESET);
+		printf(RED_ "FATAL: the state and decision dimensions are not consistent\n" COLOR_RESET);
 		exit(EXIT_FAILURE);
 	}
 
@@ -295,7 +295,7 @@ void OptimalControl::evaluateConstraints(double* constraint, int constraint_dim,
 						// Checking the constraint dimension
 						current_constraint_dim = dynamical_system_->getConstraintDimension();
 						if (current_constraint_dim != (unsigned) constraint.size()) {
-							printf(RED "FATAL: the constraint dimension of %s constraint is not consistent\n"
+							printf(RED_ "FATAL: the constraint dimension of %s constraint is not consistent\n"
 									COLOR_RESET, dynamical_system_->getName().c_str());
 							exit(EXIT_FAILURE);
 						}
@@ -309,7 +309,7 @@ void OptimalControl::evaluateConstraints(double* constraint, int constraint_dim,
 						// Checking the constraint dimension
 						current_constraint_dim = constraints_[j-1]->getConstraintDimension();
 						if (current_constraint_dim != (unsigned) constraint.size()) {
-							printf(RED "FATAL: the constraint dimension of %s constraint is not consistent\n"
+							printf(RED_ "FATAL: the constraint dimension of %s constraint is not consistent\n"
 									COLOR_RESET, constraints_[j-1]->getName().c_str());
 							exit(EXIT_FAILURE);
 						}
@@ -354,7 +354,7 @@ void OptimalControl::evaluateCosts(double& cost,
 	const Eigen::Map<const Eigen::VectorXd> decision_var(decision, decision_dim);
 
 	if (state_dimension_ != (decision_var.size() / horizon_)) {
-		printf(RED "FATAL: the state and decision dimensions are not consistent\n" COLOR_RESET);
+		printf(RED_ "FATAL: the state and decision dimensions are not consistent\n" COLOR_RESET);
 		exit(EXIT_FAILURE);
 	}
 
@@ -544,11 +544,11 @@ WholeBodyTrajectory& OptimalControl::evaluateSolution(const Eigen::Ref<const Eig
 void OptimalControl::addDynamicalSystem(DynamicalSystem* dynamical_system)
 {
 	if (is_added_dynamic_system_) {
-		printf(YELLOW "Could not added two dynamical systems\n" COLOR_RESET);
+		printf(YELLOW_ "Could not added two dynamical systems\n" COLOR_RESET);
 		return;
 	}
 
-	printf(GREEN "Adding the %s dynamical system\n" COLOR_RESET, dynamical_system->getName().c_str());
+	printf(GREEN_ "Adding the %s dynamical system\n" COLOR_RESET, dynamical_system->getName().c_str());
 	dynamical_system_ = dynamical_system;
 	is_added_dynamic_system_ = true;
 }
@@ -559,13 +559,13 @@ void OptimalControl::removeDynamicalSystem()
 	if (is_added_dynamic_system_)
 		is_added_dynamic_system_ = false;
 	else
-		printf(YELLOW "There was not added a dynamical system\n" COLOR_RESET);
+		printf(YELLOW_ "There was not added a dynamical system\n" COLOR_RESET);
 }
 
 
 void OptimalControl::addConstraint(Constraint<WholeBodyState>* constraint)
 {
-	printf(GREEN "Adding the %s constraint\n" COLOR_RESET, constraint->getName().c_str());
+	printf(GREEN_ "Adding the %s constraint\n" COLOR_RESET, constraint->getName().c_str());
 	constraints_.push_back(constraint);
 
 	if (!is_added_constraint_)
@@ -579,7 +579,7 @@ void OptimalControl::removeConstraint(std::string constraint_name)
 		unsigned int num_constraints = constraints_.size();
 		for (unsigned int i = 0; i < num_constraints; i++) {
 			if (constraint_name == constraints_[i]->getName().c_str()) {
-				printf(GREEN "Removing the %s constraint\n" COLOR_RESET, constraints_[i]->getName().c_str());
+				printf(GREEN_ "Removing the %s constraint\n" COLOR_RESET, constraints_[i]->getName().c_str());
 
 				// Deleting the constraint
 				delete constraints_.at(i);
@@ -589,7 +589,7 @@ void OptimalControl::removeConstraint(std::string constraint_name)
 			}
 		}
 	} else {
-		printf(YELLOW "Could not removed the %s constraint because has not been added an "
+		printf(YELLOW_ "Could not removed the %s constraint because has not been added an "
 				"constraint\n" COLOR_RESET,	constraint_name.c_str());
 		return;
 	}
@@ -598,7 +598,7 @@ void OptimalControl::removeConstraint(std::string constraint_name)
 
 void OptimalControl::addCost(Cost* cost)
 {
-	printf(GREEN "Adding the %s cost\n" COLOR_RESET, cost->getName().c_str());
+	printf(GREEN_ "Adding the %s cost\n" COLOR_RESET, cost->getName().c_str());
 
 	costs_.push_back(cost);
 	is_added_cost_ = true;
@@ -609,13 +609,13 @@ void OptimalControl::removeCost(std::string cost_name)
 {
 	if (is_added_cost_) {
 		if (costs_.size() == 0)
-			printf(YELLOW "Could not removed the %s cost because there is not cost\n" COLOR_RESET,
+			printf(YELLOW_ "Could not removed the %s cost because there is not cost\n" COLOR_RESET,
 					cost_name.c_str());
 		else {
 			unsigned int costs_size = costs_.size();
 			for (unsigned int i = 0; i < costs_size; i++) {
 				if (cost_name == costs_[i]->getName().c_str()) {
-					printf(GREEN "Removing the %s cost\n" COLOR_RESET, costs_[i]->getName().c_str());
+					printf(GREEN_ "Removing the %s cost\n" COLOR_RESET, costs_[i]->getName().c_str());
 
 					// Deleting the cost
 					delete costs_.at(i);
@@ -624,13 +624,13 @@ void OptimalControl::removeCost(std::string cost_name)
 					return;
 				}
 				else if (i == costs_.size() - 1) {
-					printf(YELLOW "Could not removed the %s cost\n" COLOR_RESET, cost_name.c_str());
+					printf(YELLOW_ "Could not removed the %s cost\n" COLOR_RESET, cost_name.c_str());
 				}
 			}
 		}
 	}
 	else
-		printf(YELLOW "Could not removed the %s cost because has not been added an cost\n"
+		printf(YELLOW_ "Could not removed the %s cost because has not been added an cost\n"
 				COLOR_RESET, cost_name.c_str());
 }
 

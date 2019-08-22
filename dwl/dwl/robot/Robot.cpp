@@ -50,7 +50,7 @@ void Robot::read(std::string filename)
 		for (std::size_t i = 0; i < end_effectors.size(); i++)
 			end_effectors_[i] = end_effectors[i];
 	} else
-		printf(YELLOW "Warning: the end-effector was not read\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: the end-effector was not read\n" COLOR_RESET);
 
 	// Reading the feet of the robot
 	std::vector<std::string> feet;
@@ -59,7 +59,7 @@ void Robot::read(std::string filename)
 		for (unsigned int i = 0; i < num_feet_; i++)
 			feet_[i] = feet[i];
 	} else
-		printf(YELLOW "Warning: the feet was not read\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: the feet was not read\n" COLOR_RESET);
 
 	// Reading the end-effectors description
 	for (EndEffectorMap::iterator e = end_effectors_.begin();
@@ -72,7 +72,7 @@ void Robot::read(std::string filename)
 			for (unsigned int k = 0; k < patchs.size(); k++)
 				patchs_[id] = patchs;
 		} else
-			printf(YELLOW "Warning: the patches of %s was not read\n" COLOR_RESET,
+			printf(YELLOW_ "Warning: the patches of %s was not read\n" COLOR_RESET,
 					name.c_str());
 	}
 
@@ -94,7 +94,7 @@ void Robot::read(std::string filename)
 			}
 			pattern_locomotion_[id] = next_feet_id;
 		} else
-			printf(YELLOW "Warning: the next leg of %s was not read\n" COLOR_RESET,
+			printf(YELLOW_ "Warning: the next leg of %s was not read\n" COLOR_RESET,
 					name.c_str());
 	}
 
@@ -110,17 +110,17 @@ void Robot::read(std::string filename)
 			stance(2) = estimated_ground_from_body_;
 			nominal_stance_[id] = stance;
 		} else
-			printf(YELLOW "Warning: the position of %s leg was not read\n" COLOR_RESET,
+			printf(YELLOW_ "Warning: the position of %s leg was not read\n" COLOR_RESET,
 					name.c_str());
 	}
 
 	// Reading the lateral offset
 	if (!yaml_reader_.read(feet_lateral_offset_, "lateral_offset", stance_ns))
-		printf(YELLOW "Warning: the lateral offset was not read\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: the lateral offset was not read\n" COLOR_RESET);
 
 	// Reading the frontal displacement
 	if (!yaml_reader_.read(displacement_, "displacement", stance_ns))
-		printf(YELLOW "Warning: the displacement was not read\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: the displacement was not read\n" COLOR_RESET);
 
 	// Reading the footstep search window
 	for (EndEffectorMap::iterator it = feet_.begin(); it != feet_.end(); ++it) {
@@ -132,7 +132,7 @@ void Robot::read(std::string filename)
 			unsigned int id = it->first;
 			footstep_window_[id] = search_area;
 		} else
-			printf(YELLOW "Warning: the footstep search window of %s leg was not read\n"
+			printf(YELLOW_ "Warning: the footstep search window of %s leg was not read\n"
 					COLOR_RESET, name.c_str());
 	}
 
@@ -146,13 +146,13 @@ void Robot::read(std::string filename)
 			unsigned int id = it->first;
 			foot_workspaces_[id] = work_area;
 		} else
-			printf(YELLOW "Warning: the workspace of %s foot was not read\n" COLOR_RESET,
+			printf(YELLOW_ "Warning: the workspace of %s foot was not read\n" COLOR_RESET,
 					name.c_str());
 	}
 
 	// Reading the body work window
 	if (!yaml_reader_.read(body_workspace_, "body_workspace", properties_ns))
-		printf(YELLOW "Warning: the body workspace description was not read\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: the body workspace description was not read\n" COLOR_RESET);
 }
 
 

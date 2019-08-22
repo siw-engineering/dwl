@@ -27,17 +27,17 @@ void PlanningOfMotionSequence::reset(robot::Robot* robot,
 									 solver::SearchTreeSolver* solver,
 									 environment::TerrainMap* terrain)
 {
-	printf(BLUE "Setting the robot properties in the %s planner \n"
+	printf(BLUE_ "Setting the robot properties in the %s planner \n"
 			COLOR_RESET, name_.c_str());
 	robot_ = robot;
 
-	printf(BLUE "Setting the %s solver in the %s planner\n"
+	printf(BLUE_ "Setting the %s solver in the %s planner\n"
 			COLOR_RESET, solver->getName().c_str(), name_.c_str());
 	is_set_solver_ = true;
 	solver_ = solver;
 	solver_->reset(robot, terrain);
 
-	printf(BLUE "Setting the environment information in the %s planner\n"
+	printf(BLUE_ "Setting the environment information in the %s planner\n"
 			COLOR_RESET, name_.c_str());
 	terrain_ = terrain;
 }
@@ -48,19 +48,19 @@ void PlanningOfMotionSequence::reset(robot::Robot* robot,
 									 ContactPlanning* contact_planner,
 									 environment::TerrainMap* terrain)
 {
-	printf(BLUE "Setting the robot properties in the %s planner \n"
+	printf(BLUE_ "Setting the robot properties in the %s planner \n"
 			COLOR_RESET, name_.c_str());
 	robot_ = robot;
 
-	printf(BLUE "Setting the environment information in the %s planner\n"
+	printf(BLUE_ "Setting the environment information in the %s planner\n"
 			COLOR_RESET, name_.c_str());
 	terrain_ = terrain;
 
-	printf(BLUE "Setting the motion planner\n" COLOR_RESET);
+	printf(BLUE_ "Setting the motion planner\n" COLOR_RESET);
 	motion_planner_ = motion_planner;
 	motion_planner_->reset(robot, terrain);
 
-	printf(BLUE "Setting the contact planner\n" COLOR_RESET);
+	printf(BLUE_ "Setting the contact planner\n" COLOR_RESET);
 	contact_planner_ = contact_planner;
 	contact_planner_->reset(robot, terrain);
 
@@ -71,13 +71,13 @@ void PlanningOfMotionSequence::reset(robot::Robot* robot,
 bool PlanningOfMotionSequence::initPlan()
 {
 	if (!is_set_solver_) {
-		printf(YELLOW "Could not initialized the %s planning because has not"
+		printf(YELLOW_ "Could not initialized the %s planning because has not"
 				" been set the solver\n" COLOR_RESET, name_.c_str());
 		return false;
 	}
 
 	if (!init()) {
-		printf(RED "Could not initialized the %s planning algorithm\n"
+		printf(RED_ "Could not initialized the %s planning algorithm\n"
 				COLOR_RESET, name_.c_str());
 		return false;
 	}
@@ -96,11 +96,11 @@ void PlanningOfMotionSequence::resetGoal(Pose goal)
 bool PlanningOfMotionSequence::computePlan(Pose robot_state)
 {
 	if (!is_initialized_planning_) {
-		printf(YELLOW "Could not executed the %s planning because has not"
+		printf(YELLOW_ "Could not executed the %s planning because has not"
 				" been initialized\n" COLOR_RESET, name_.c_str());
 		return false;
 	} else if (!is_set_solver_) {
-		printf(YELLOW "Could not executed the %s planning because has not"
+		printf(YELLOW_ "Could not executed the %s planning because has not"
 				" been set the solver\n" COLOR_RESET, name_.c_str());
 		return false;
 	}
@@ -133,7 +133,7 @@ void PlanningOfMotionSequence::setComputationTime(double computation_time,
 			contact_planner_->setComputationTime(computation_time);
 			break;
 		default:
-			printf(YELLOW "Warning: it was not set an allowed computation"
+			printf(YELLOW_ "Warning: it was not set an allowed computation"
 					" time because there is not exist that type of solver \n"
 					COLOR_RESET);
 			break;

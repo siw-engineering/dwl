@@ -24,11 +24,11 @@ SearchTreeSolver::~SearchTreeSolver()
 void SearchTreeSolver::reset(robot::Robot* robot,
 							 environment::TerrainMap* environment)
 {
-	printf(BLUE "Setting the robot and environment information in the %s "
+	printf(BLUE_ "Setting the robot and environment information in the %s "
 			"solver\n" COLOR_RESET,	getName().c_str());
 
 	if (!is_set_adjacency_model_) {
-		printf(YELLOW "WARNING: Could not be set the robot and environment "
+		printf(YELLOW_ "WARNING: Could not be set the robot and environment "
 				"information in the adjacency model \n" COLOR_RESET);
 		return;
 	}
@@ -39,7 +39,7 @@ void SearchTreeSolver::reset(robot::Robot* robot,
 
 void SearchTreeSolver::setAdjacencyModel(model::AdjacencyModel* adjacency_model)
 {
-	printf(BLUE "Setting the %s adjacency model in the %s solver\n" COLOR_RESET,
+	printf(BLUE_ "Setting the %s adjacency model in the %s solver\n" COLOR_RESET,
 			adjacency_model->getName().c_str(), getName().c_str());
 	adjacency_ = adjacency_model;
 	is_set_adjacency_model_ = true;

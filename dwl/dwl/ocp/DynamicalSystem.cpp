@@ -98,7 +98,7 @@ void DynamicalSystem::compute(Eigen::VectorXd& constraint,
 void DynamicalSystem::computeDynamicalConstraint(Eigen::VectorXd& constraint,
 												 const WholeBodyState& state)
 {
-	printf(RED "FATAL: the dynamical constraint was not implemented\n" COLOR_RESET);
+	printf(RED_ "FATAL: the dynamical constraint was not implemented\n" COLOR_RESET);
 	exit(EXIT_FAILURE);
 }
 
@@ -157,7 +157,7 @@ void DynamicalSystem::getBounds(Eigen::VectorXd& lower_bound,
 void DynamicalSystem::getDynamicalBounds(Eigen::VectorXd& lower_bound,
 										 Eigen::VectorXd& upper_bound)
 {
-	printf(RED "FATAL: the dynamical bounds was not implemented\n" COLOR_RESET);
+	printf(RED_ "FATAL: the dynamical bounds was not implemented\n" COLOR_RESET);
 	exit(EXIT_FAILURE);
 }
 

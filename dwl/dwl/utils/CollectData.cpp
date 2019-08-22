@@ -44,7 +44,7 @@ void CollectData::initCollectData(const std::string& filename,
 		}
 
 	} else
-		printf(YELLOW "Warning: the data file is already opened. Note that"
+		printf(YELLOW_ "Warning: the data file is already opened. Note that"
 				" you could open another data file after writing the current "
 				"one\n" COLOR_RESET);
 }

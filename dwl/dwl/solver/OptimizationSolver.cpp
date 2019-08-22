@@ -60,7 +60,7 @@ bool OptimizationSolver::init()
 
 bool OptimizationSolver::compute(double computation_time)
 {
-	printf(RED "Error: you have to define a solver.\n" COLOR_RESET);
+	printf(RED_ "Error: you have to define a solver.\n" COLOR_RESET);
 	return true;
 }
 

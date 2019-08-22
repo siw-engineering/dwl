@@ -1,5 +1,5 @@
-#ifndef DWL__ROBOT_STATES__H
-#define DWL__ROBOT_STATES__H
+#ifndef DWL__joint_states__H
+#define DWL__joint_states__H
 
 #include <dwl/WholeBodyState.h>
 #include <dwl/ReducedBodyState.h>

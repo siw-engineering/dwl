@@ -32,7 +32,7 @@ void ObstacleMap::compute(octomap::OcTree* octomap,
 						  const Eigen::Vector4d& robot_state)
 {
 	if (!is_added_search_area_) {
-		printf(YELLOW "Warning: adding a default search area \n" COLOR_RESET);
+		printf(YELLOW_ "Warning: adding a default search area \n" COLOR_RESET);
 		// Adding a default search area
 		addSearchArea(5, 5, -2.75, 2.75, -0.202, 0.2, 0.08);
 
@@ -70,7 +70,7 @@ void ObstacleMap::compute(octomap::OcTree* octomap,
 				double z = search_areas_[n].max_z + robot_state(2);
 				octomap::OcTreeKey init_key;
 				if (!octomap->coordToKeyChecked(xr, yr, z, depth_, init_key)) {
-					printf(RED "Cell out of bounds \n" COLOR_RESET);
+					printf(RED_ "Cell out of bounds \n" COLOR_RESET);
 
 					return;
 				}

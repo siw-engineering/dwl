@@ -31,7 +31,7 @@ void LinearControlledCartTableModel::initResponse(const ReducedBodyState& state,
 											 	  const CartTableControlParams& params_H)
 {
 	if (!init_model_) {
-		printf(YELLOW "Warning: could not initialized the initResponse because"
+		printf(YELLOW_ "Warning: could not initialized the initResponse because"
 				" there is not defined the cart-table model\n" COLOR_RESET);
 		return;
 	}
@@ -176,7 +176,7 @@ void LinearControlledCartTableModel::computeResponse(ReducedBodyState& state,
 													 double time)
 {
 	if (!init_response_) {
-		printf(YELLOW "Warning: could not be computed the SLIP response because."
+		printf(YELLOW_ "Warning: could not be computed the SLIP response because."
 				" You should call initResponse\n" COLOR_RESET);
 		return;
 	}

@@ -142,7 +142,7 @@ void FloatingBaseSystem::resetFromURDFModel(const std::string& urdf_model,
 	num_end_effectors_ = end_effectors_.size();
 
 	if (num_feet_ == 0) {
-		printf(YELLOW "Warning: setting up all the end-effectors are feet\n"
+        printf(YELLOW_ "Warning: setting up all the end-effectors are feet\n"
 				COLOR_RESET);
 		num_feet_ = num_end_effectors_;
 		foot_names_ = end_effector_names_;
@@ -443,7 +443,7 @@ unsigned int FloatingBaseSystem::getFloatingBaseJointCoordinate(unsigned int id)
 	else if (floating_lz_.active && floating_lz_.id == id)
 		return rbd::LZ;
 	else {
-		printf(RED "ERROR: the %i id doesn't bellow to floating-base joint\n"
+        printf(RED_ "ERROR: the %i id doesn't bellow to floating-base joint\n"
 				COLOR_RESET, id);
 		return 0;
 	}
@@ -712,7 +712,7 @@ void FloatingBaseSystem::setBranchState(Eigen::VectorXd& new_joint_state,
 		q_index -= getFloatingBaseDoF();
 
 	if (branch_state.size() != num_dof) {
-		printf(RED "FATAL: the branch state dimension is not consistent\n" COLOR_RESET);
+        printf(RED_ "FATAL: the branch state dimension is not consistent\n" COLOR_RESET);
 		exit(EXIT_FAILURE);
 	}
 

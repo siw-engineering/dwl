@@ -348,7 +348,7 @@ void WholeBodyKinematics::computeJointVelocity(Eigen::VectorXd& joint_vel,
 			// Setting up the branch joint velocity
 			system_.setBranchState(joint_vel, branch_joint_vel, body_name);
 		} else
-			printf(YELLOW "Warning: the operational velocity of %s body was "
+			printf(YELLOW_ "Warning: the operational velocity of %s body was "
 					"not defined\n" COLOR_RESET, body_name.c_str());
 	}
 }
@@ -388,7 +388,7 @@ void WholeBodyKinematics::computeJointAcceleration(Eigen::VectorXd& joint_acc,
 			// Setting up the branch joint velocity
 			system_.setBranchState(joint_acc, branch_joint_acc, body_name);
 		} else
-			printf(YELLOW "Warning: the operational acceleration of %s body was "
+			printf(YELLOW_ "Warning: the operational acceleration of %s body was "
 					"not defined\n" COLOR_RESET, body_name.c_str());
 	}
 }
@@ -524,7 +524,7 @@ void WholeBodyKinematics::getFloatingBaseJacobian(Eigen::MatrixXd& jacobian,
 				jacobian.col(base_joint.id) = full_jacobian.col(base_joint.id);
 		}
 	} else {
-		printf(YELLOW "Warning: this is a fixed-base robot\n" COLOR_RESET);
+		printf(YELLOW_ "Warning: this is a fixed-base robot\n" COLOR_RESET);
 		jacobian = Eigen::MatrixXd::Zero(0,0);
 	}
 }
@@ -815,7 +815,7 @@ int WholeBodyKinematics::getNumberOfActiveEndEffectors(const rbd::BodySelector& 
 		if (body_id_.count(body_name) > 0) {
 			++num_body_set;
 		} else
-			printf(YELLOW "WARNING: The %s link is not an end-effector\n"
+			printf(YELLOW_ "WARNING: The %s link is not an end-effector\n"
 					COLOR_RESET, body_name.c_str());
 	}
 

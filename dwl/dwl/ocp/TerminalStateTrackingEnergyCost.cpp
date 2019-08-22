@@ -33,7 +33,7 @@ void TerminalStateTrackingEnergyCost::compute(double& cost,
 	if (cost_variables_.joint_pos) {
 		// Checking the joint position size
 		if (state.joint_pos.size() != locomotion_weights_.joint_pos.size()) {
-			printf(RED "FATAL: the joint position dimensions are not consistent\n" COLOR_RESET);
+			printf(RED_ "FATAL: the joint position dimensions are not consistent\n" COLOR_RESET);
 			exit(EXIT_FAILURE);
 		}
 
@@ -49,7 +49,7 @@ void TerminalStateTrackingEnergyCost::compute(double& cost,
 	if (cost_variables_.joint_vel) {
 		// Checking the joint velocity size
 		if (state.joint_vel.size() != locomotion_weights_.joint_vel.size()) {
-			printf(RED "FATAL: the joint velocity dimensions are not consistent\n" COLOR_RESET);
+			printf(RED_ "FATAL: the joint velocity dimensions are not consistent\n" COLOR_RESET);
 			exit(EXIT_FAILURE);
 		}
 
@@ -65,7 +65,7 @@ void TerminalStateTrackingEnergyCost::compute(double& cost,
 	if (cost_variables_.joint_acc) {
 		// Checking the joint acceleration size
 		if (state.joint_acc.size() != locomotion_weights_.joint_acc.size()) {
-			printf(RED "FATAL: the joint acceleration dimensions are not consistent\n" COLOR_RESET);
+			printf(RED_ "FATAL: the joint acceleration dimensions are not consistent\n" COLOR_RESET);
 			exit(EXIT_FAILURE);
 		}
 

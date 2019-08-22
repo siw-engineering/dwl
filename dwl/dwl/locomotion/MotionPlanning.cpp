@@ -25,11 +25,11 @@ MotionPlanning::~MotionPlanning()
 void MotionPlanning::reset(robot::Robot* robot,
 						   environment::TerrainMap* terrain)
 {
-	printf(BLUE "Setting the robot properties in the contact planner \n"
+	printf(BLUE_ "Setting the robot properties in the contact planner \n"
 			COLOR_RESET);
 	robot_ = robot;
 
-	printf(BLUE "Setting the environment information in the body planner\n"
+	printf(BLUE_ "Setting the environment information in the body planner\n"
 			COLOR_RESET);
 	terrain_ = terrain;
 
@@ -40,7 +40,7 @@ void MotionPlanning::reset(robot::Robot* robot,
 
 void MotionPlanning::reset(solver::SearchTreeSolver* solver)
 {
-	printf(BLUE "Setting the %s path solver in the %s planner\n" COLOR_RESET,
+	printf(BLUE_ "Setting the %s path solver in the %s planner\n" COLOR_RESET,
 			solver->getName().c_str(), name_.c_str());
 	path_solver_ = solver;
 	path_solver_->init();

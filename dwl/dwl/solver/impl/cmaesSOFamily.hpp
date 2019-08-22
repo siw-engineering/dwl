@@ -44,7 +44,7 @@ void cmaesSOFamily<TScaling>::setFromConfigFile(std::string filename)
 
 	// Parsing the configuration file
 	std::string cmaes = "cmaes";
-	printf(BLUE "Reading the configuration parameters from the %s namespace.\n" COLOR_RESET,
+    printf(BLUE_ "Reading the configuration parameters from the %s namespace.\n" COLOR_RESET,
 			cmaes.c_str());
 	YamlNamespace cmaes_ns = {cmaes};
 	YamlNamespace ofile_ns = {cmaes, "output_file"};
@@ -274,7 +274,7 @@ bool cmaesSOFamily<TScaling>::init()
 	// Safety checking of hard-constraints
 	constraint_dim_ = model_->getDimensionOfConstraints();
 	if (constraint_dim_ > 0) {
-		printf(BLUE "Info: The hard constraints will be described as soft"
+        printf(BLUE_ "Info: The hard constraints will be described as soft"
 				" constraints.\n" COLOR_RESET);
 	}
 
