@@ -399,6 +399,17 @@ class WholeBodyState
 		 */
 		const rbd::BodyVector6d& getContactWrench_B() const;
 
+		/** @brief Gets the contact wrench expressed the world frame
+		 * @param[in] name The contact name
+		 * @return The contact wrench expressed in the base frame
+		 */
+		const rbd::Vector6d& getContactWrench_W(const std::string& name) const;		
+
+		/** @brief Gets all contact wrenches expressed the world frame
+		 * @return All contact wrenches expressed in the base frame
+		 */
+		const rbd::BodyVector6d& getContactWrench_W() const;
+
 		/** @brief Gets the contact condition (active or inactive)
 		 * @param[in] name The contact name
 		 * @param[in] threshold Force threshold for detecting contact condition

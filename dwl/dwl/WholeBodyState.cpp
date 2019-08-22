@@ -574,6 +574,21 @@ const rbd::Vector6d& WholeBodyState::getContactWrench_B(const std::string& name)
 		return it->second;
 }
 
+const rbd::BodyVector6d& WholeBodyState::getContactWrench_W() const
+{
+	return contact_eff;
+}
+
+
+const rbd::Vector6d& WholeBodyState::getContactWrench_W(const std::string& name) const
+{
+	rbd::BodyVector6d::const_iterator it = contact_eff.find(name);
+	if (it == contact_eff.end())
+		return null_6dvector_;
+	else
+		return it->second;
+}
+
 
 bool WholeBodyState::getContactCondition(const std::string& name,
 										 const double& force_threshold) const
