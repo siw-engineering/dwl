@@ -355,7 +355,7 @@ const Eigen::Vector3d& FloatingBaseSystem::getSystemCoM(const rbd::Vector6d& bas
 
 	double mass;
 	RigidBodyDynamics::Utils::CalcCenterOfMass(rbd_model_,
-											   q, qd, mass,
+											   q, qd, NULL, mass,
 											   com_system_);
 
 	return com_system_;
@@ -372,7 +372,7 @@ const Eigen::Vector3d& FloatingBaseSystem::getSystemCoMRate(const rbd::Vector6d&
 
 	double mass;
 	RigidBodyDynamics::Utils::CalcCenterOfMass(rbd_model_,
-											   q, qd, mass,
+											   q, qd, NULL, mass,
 											   com_system_, &comd_system_);
 
 	return comd_system_;

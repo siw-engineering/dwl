@@ -6,6 +6,7 @@ namespace dwl
 
 namespace rbd
 {
+RigidBodyDynamics::Math::SpatialVector SpatialVectorZero ( 0., 0., 0., 0., 0., 0.);
 
 std::string coord3dToName(enum Coords3d coord)
 {

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.10)
 project(dwl)
 
 set(DWL_VERSION 1.2.3 CACHE STRING "DWL version")
@@ -8,7 +8,7 @@ message("All rights reserved.")
 message("Released under the BSD 3-Clause License.")
 
 # Defining the dwl install prefix
-set(INSTALL_DEPS_PREFIX /usr/local CACHE STRINGS "DWL thirdparty install path")
+set(INSTALL_DEPS_PREFIX /usr/local CACHE STRING "DWL thirdparty install path")
 
 # Compiling with Catkin
 message("Compiling DWL library as a Catkin project")

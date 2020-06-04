@@ -1,6 +1,6 @@
 #include <dwl/utils/URDF.h>
 #include <fstream>
-
+#include <memory>
 
 namespace dwl
 {
@@ -35,13 +35,13 @@ void getJointNames(JointID& joints,
 				   enum JointType type)
 {
 	// Parsing the URDF-XML
-	boost::shared_ptr<urdf::ModelInterface> model = urdf::parseURDF(urdf_model);
+	std::shared_ptr<urdf::ModelInterface> model = urdf::parseURDF(urdf_model);
 
-	std::stack<boost::shared_ptr<urdf::Link> > link_stack;
+	std::stack<std::shared_ptr<urdf::Link> > link_stack;
 	std::stack<int> branch_index_stack;
 
 	// Adding the bodies in a depth-first order of the model tree
-	std::map<std::string, boost::shared_ptr<urdf::Link> > link_map = model->links_;
+	std::map<std::string, std::shared_ptr<urdf::Link> > link_map = model->links_;
 	link_stack.push(link_map[model->getRoot()->name]);
 
 	if (link_stack.top()->child_joints.size() > 0) {
@@ -50,11 +50,11 @@ void getJointNames(JointID& joints,
 
 	unsigned int joint_idx = 0;
 	while (link_stack.size() > 0) {
-		boost::shared_ptr<urdf::Link> current_link = link_stack.top();
+		std::shared_ptr<urdf::Link> current_link = link_stack.top();
 		unsigned int branch_idx = branch_index_stack.top();
 
 		if (branch_idx < current_link->child_joints.size()) {
-			boost::shared_ptr<urdf::Joint> current_joint =
+			std::shared_ptr<urdf::Joint> current_joint =
 					current_link->child_joints[branch_idx];
 
 			// Incrementing branch index
@@ -113,33 +113,33 @@ void getEndEffectors(LinkID& end_effectors,
 					 const std::string& urdf_model)
 {
 	// Parsing the URDF-XML
-	boost::shared_ptr<urdf::ModelInterface> model = urdf::parseURDF(urdf_model);
+	std::shared_ptr<urdf::ModelInterface> model = urdf::parseURDF(urdf_model);
 
 	// Getting the fixed joint names
 	JointID fixed_joints;
 	getJointNames(fixed_joints, urdf_model, fixed);
 
 	// Getting the world, root, parent and child links
-	boost::shared_ptr<urdf::Link> world_link = model->links_[model->getRoot()->name];
-	boost::shared_ptr<urdf::Link> root_link = world_link->child_links[0];
+	std::shared_ptr<urdf::Link> world_link = model->links_[model->getRoot()->name];
+	std::shared_ptr<urdf::Link> root_link = world_link->child_links[0];
 
 	// Searching the end-effector joints
 	unsigned int end_effector_idx = 0;
 	for (urdf_model::JointID::iterator jnt_it = fixed_joints.begin();
 			jnt_it != fixed_joints.end(); jnt_it++) {
 		std::string joint_name = jnt_it->first;
-		boost::shared_ptr<urdf::Joint> current_joint = model->joints_[joint_name];
+		std::shared_ptr<urdf::Joint> current_joint = model->joints_[joint_name];
 
 		// Getting the parent and child link of the current fixed joint
-		boost::shared_ptr<urdf::Link> parent_link =
+		std::shared_ptr<urdf::Link> parent_link =
 				model->links_[current_joint->parent_link_name];
-		boost::shared_ptr<urdf::Link> child_link =
+		std::shared_ptr<urdf::Link> child_link =
 				model->links_[current_joint->child_link_name];
 
 		// Checking if it's an end-effector
 		unsigned int num_childs = child_link->child_joints.size();
 		while (parent_link->name != root_link->name && num_childs == 0) {
-			boost::shared_ptr<urdf::Joint> parent_joint =
+			std::shared_ptr<urdf::Joint> parent_joint =
 					model->joints_[parent_link->parent_joint->name];
 			if (parent_joint->type == urdf::Joint::PRISMATIC ||
 					parent_joint->type == urdf::Joint::REVOLUTE) {
@@ -158,7 +158,7 @@ void getJointLimits(JointLimits& joint_limits,
 					const std::string& urdf_model)
 {
 	// Parsing the URDF-XML
-	boost::shared_ptr<urdf::ModelInterface> model = urdf::parseURDF(urdf_model);
+	std::shared_ptr<urdf::ModelInterface> model = urdf::parseURDF(urdf_model);
 
 	// Getting the free joint names
 	JointID free_joints;
@@ -169,7 +169,7 @@ void getJointLimits(JointLimits& joint_limits,
 	for (urdf_model::JointID::iterator jnt_it = free_joints.begin();
 			jnt_it != free_joints.end(); jnt_it++) {
 		std::string joint_name = jnt_it->first;
-		boost::shared_ptr<urdf::Joint> current_joint = model->joints_[joint_name];
+		std::shared_ptr<urdf::Joint> current_joint = model->joints_[joint_name];
 
 		if (current_joint->type != urdf::Joint::FLOATING)
 			if (current_joint->limits->effort != 0) // Virtual floating-base joints
@@ -180,7 +180,7 @@ void getJointLimits(JointLimits& joint_limits,
 	for (urdf_model::JointID::iterator jnt_it = free_joints.begin();
 			jnt_it != free_joints.end(); jnt_it++) {
 		std::string joint_name = jnt_it->first;
-		boost::shared_ptr<urdf::Joint> current_joint = model->joints_[joint_name];
+		std::shared_ptr<urdf::Joint> current_joint = model->joints_[joint_name];
 
 		if (current_joint->type != urdf::Joint::FLOATING) {
 			if (current_joint->limits->effort != 0) { // Virtual floating-base joints
@@ -199,7 +199,7 @@ void getJointAxis(JointAxis& joints,
 				  enum JointType type)
 {
 	// Parsing the URDF-XML
-	boost::shared_ptr<urdf::ModelInterface> model = urdf::parseURDF(urdf_model);
+	std::shared_ptr<urdf::ModelInterface> model = urdf::parseURDF(urdf_model);
 
 	// Getting the joint names
 	JointID joint_ids;
@@ -208,7 +208,7 @@ void getJointAxis(JointAxis& joints,
 	for (urdf_model::JointID::iterator jnt_it = joint_ids.begin();
 			jnt_it != joint_ids.end(); jnt_it++) {
 		std::string joint_name = jnt_it->first;
-		boost::shared_ptr<urdf::Joint> current_joint = model->joints_[joint_name];
+		std::shared_ptr<urdf::Joint> current_joint = model->joints_[joint_name];
 
 		if (current_joint->type != urdf::Joint::FLOATING ||
 				current_joint->type != urdf::Joint::FIXED)
@@ -225,7 +225,7 @@ void getFloatingBaseJointMotion(JointID& joints,
 								const std::string& urdf_model)
 {
 	// Parsing the URDF-XML
-	boost::shared_ptr<urdf::ModelInterface> model = urdf::parseURDF(urdf_model);
+	std::shared_ptr<urdf::ModelInterface> model = urdf::parseURDF(urdf_model);
 
 	// Getting the free joint names
 	JointAxis joint_axis;
@@ -234,7 +234,7 @@ void getFloatingBaseJointMotion(JointID& joints,
 	for (urdf_model::JointAxis::iterator jnt_it = joint_axis.begin();
 			jnt_it != joint_axis.end(); jnt_it++) {
 		std::string joint_name = jnt_it->first;
-		boost::shared_ptr<urdf::Joint> current_joint = model->joints_[joint_name];
+		std::shared_ptr<urdf::Joint> current_joint = model->joints_[joint_name];
 
 		// Getting the kind of motion (prismatic or rotation)
 		if (current_joint->type == urdf::Joint::FLOATING)

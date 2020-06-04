@@ -1,32 +1,132 @@
-# - Try to find rbdl dependencies
+# Searches for RBDL includes and library files, including Addons.
 #
-# This module find rbdl, e.g. you can do
-#   find_package(RBDL)
+# Sets the variables
+#   RBDL_FOUND
+#   RBDL_INCLUDE_DIR
+#   RBDL_LIBRARY
 #
-# Once done this will define
-#  RBDL_FOUND - system has found rbdl library
-#  RBDL_INCLUDE_DIRS - the rbdl include directory
-#  RBDL_LIBRARIES - the rbdl libraries
-#
-# Copyright (c) 2014-2018 Carlos Mastalli, <carlos.mastalli@laas.fr>
-# Redistribution and use is allowed according to the terms of the BSD 3-Clause license.
+# You can use the following components:
+#   LuaModel
+#   URDFReader
+# and then link to them e.g. using RBDL_LuaModel_LIBRARY.
 
-# find the rbdl include directory
-find_path(RBDL_INCLUDE_DIRS  rbdl/rbdl.h
-                             PATH_SUFFIXES include
-                             HINTS ${INSTALL_DEPS_PREFIX} /usr /usr/local)
+SET (RBDL_FOUND FALSE)
+SET (RBDL_LuaModel_FOUND FALSE)
+SET (RBDL_URDFReader_FOUND FALSE)
 
-# find the rbdl library
-find_library(RBDL_LIBRARIES  NAMES rbdl
-                             PATH_SUFFIXES lib
-                             HINTS ${INSTALL_DEPS_PREFIX} /usr /usr/local)
-find_library(RBDL_URDF_LIBRARIES  NAMES  rbdl_urdfreader
-                                  PATH_SUFFIXES lib
-                                  HINTS ${INSTALL_DEPS_PREFIX} /usr /usr/local)
-list(APPEND RBDL_LIBRARIES  ${RBDL_URDF_LIBRARIES})
+FIND_PATH (RBDL_INCLUDE_DIR rbdl/rbdl.h
+	HINTS
+	$ENV{HOME}/local/include
+	$ENV{RBDL_PATH}/src
+	$ENV{RBDL_PATH}/include
+	$ENV{RBDL_INCLUDE_PATH}
+	/usr/local/include
+	/usr/include
+	)
+	
+FIND_LIBRARY (RBDL_LIBRARY NAMES rbdl
+	PATHS
+	$ENV{HOME}/local/lib
+	$ENV{HOME}/local/lib/x86_64-linux-gnu
+	$ENV{RBDL_PATH}/lib
+	$ENV{RBDL_LIBRARY_PATH}
+	/usr/local/lib
+	/usr/local/lib/x86_64-linux-gnu
+	/usr/lib
+	/usr/lib/x86_64-linux-gnu
+	)
 
-# handle the QUIETLY and REQUIRED arguments and set RBDL_FOUND to TRUE if all listed variables are TRUE
-include(FindPackageHandleStandardArgs)
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(RBDL DEFAULT_MSG RBDL_INCLUDE_DIRS RBDL_LIBRARIES)
+FIND_PATH (RBDL_LuaModel_INCLUDE_DIR rbdl/addons/luamodel/luamodel.h
+	HINTS
+	$ENV{HOME}/local/include
+	$ENV{RBDL_PATH}/src
+	$ENV{RBDL_PATH}/include
+	$ENV{RBDL_INCLUDE_PATH}
+	/usr/local/include
+	/usr/include
+	)
 
-mark_as_advanced(RBDL_INCLUDE_DIR RBDL_LIBRARIES)
+FIND_LIBRARY (RBDL_LuaModel_LIBRARY NAMES rbdl_luamodel
+	PATHS
+	$ENV{HOME}/local/lib
+	$ENV{HOME}/local/lib/x86_64-linux-gnu
+	$ENV{RBDL_PATH}
+	$ENV{RBDL_LIBRARY_PATH}
+	/usr/local/lib
+	/usr/local/lib/x86_64-linux-gnu
+	/usr/lib
+	/usr/lib/x86_64-linux-gnu
+	)
+
+FIND_PATH (RBDL_URDFReader_INCLUDE_DIR rbdl/addons/urdfreader/urdfreader.h
+	HINTS
+	$ENV{HOME}/local/include
+	$ENV{RBDL_PATH}/src
+	$ENV{RBDL_PATH}/include
+	$ENV{RBDL_INCLUDE_PATH}
+	/usr/local/include
+	/usr/include
+	)
+
+FIND_LIBRARY (RBDL_URDFReader_LIBRARY NAMES rbdl_urdfreader
+	PATHS
+	$ENV{HOME}/local/lib
+	$ENV{HOME}/local/lib/x86_64-linux-gnu
+	$ENV{RBDL_PATH}
+	$ENV{RBDL_LIBRARY_PATH}
+	/usr/local/lib
+	/usr/local/lib/x86_64-linux-gnu
+	/usr/lib
+	/usr/lib/x86_64-linux-gnu
+	)
+
+IF (NOT RBDL_LIBRARY)
+	MESSAGE (ERROR "Could not find RBDL")
+ENDIF (NOT RBDL_LIBRARY)
+
+IF (RBDL_INCLUDE_DIR AND RBDL_LIBRARY)
+	SET (RBDL_FOUND TRUE)
+	SET(RBDL_INCLUDE_DIRS ${RBDL_INCLUDE_DIR})
+	SET(RBDL_LIBRARIES ${RBDL_LIBRARY})
+ENDIF (RBDL_INCLUDE_DIR AND RBDL_LIBRARY)
+
+IF (RBDL_LuaModel_INCLUDE_DIR AND RBDL_LuaModel_LIBRARY)
+	SET (RBDL_LuaModel_FOUND TRUE)
+	SET(RBDL_LuaModel_INCLUDE_DIRS ${RBDL_LuaModel_INCLUDE_DIR})
+	SET(RBDL_LuaModel_LIBRARIES ${RBDL_LuaModel_LIBRARY})
+ENDIF (RBDL_LuaModel_INCLUDE_DIR AND RBDL_LuaModel_LIBRARY)
+
+IF (RBDL_URDFReader_INCLUDE_DIR AND RBDL_URDFReader_LIBRARY)
+	SET (RBDL_URDFReader_FOUND TRUE)
+	SET(RBDL_URDFReader_INCLUDE_DIRS ${RBDL_URDFReader_INCLUDE_DIR})
+	SET(RBDL_URDFReader_LIBRARIES ${RBDL_URDFReader_LIBRARY})
+ENDIF (RBDL_URDFReader_INCLUDE_DIR AND RBDL_URDFReader_LIBRARY)
+
+IF (RBDL_FOUND)
+   IF (NOT RBDL_FIND_QUIETLY)
+      MESSAGE(STATUS "Found RBDL: ${RBDL_LIBRARY}")
+   ENDIF (NOT RBDL_FIND_QUIETLY)
+
+	 foreach ( COMPONENT ${RBDL_FIND_COMPONENTS} )
+		 IF (RBDL_${COMPONENT}_FOUND)
+			 IF (NOT RBDL_FIND_QUIETLY)
+				 MESSAGE(STATUS "Found RBDL ${COMPONENT}: ${RBDL_${COMPONENT}_LIBRARY}")
+			 ENDIF (NOT RBDL_FIND_QUIETLY)
+		 ELSE (RBDL_${COMPONENT}_FOUND)
+			 MESSAGE(SEND_ERROR "Could not find RBDL ${COMPONENT}")
+		 ENDIF (RBDL_${COMPONENT}_FOUND)
+	 endforeach ( COMPONENT )
+ELSE (RBDL_FOUND)
+   IF (RBDL_FIND_REQUIRED)
+		 MESSAGE(SEND_ERROR "Could not find RBDL")
+   ENDIF (RBDL_FIND_REQUIRED)
+ENDIF (RBDL_FOUND)
+
+MARK_AS_ADVANCED (
+	RBDL_INCLUDE_DIR
+	RBDL_LIBRARY
+	RBDL_LuaModel_INCLUDE_DIR
+	RBDL_LuaModel_LIBRARY
+	RBDL_URDFReader_INCLUDE_DIR
+	RBDL_URDFReader_LIBRARY
+	)
